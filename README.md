@@ -18,7 +18,7 @@ Features:
 4. Embedded Google Map, easy to navigate;
 5. Estimating seminar information including: room capacity,speaker prominance rating, estimated attendance and etc.
 
-How Do I Use It?
+How Do I Use It? 
 ==================================
 The module consists of three web pages. The main page, found [here](http://ec2-54-205-135-226.compute-1.amazonaws.com/index.php),
 contains the most important component, listing seminars by the designations described above. These features, crucially,
