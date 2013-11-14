@@ -10,5 +10,7 @@
     <string name="btnIntendV">Take Video</string>
     <string name="cannot">Cannot</string>
     <string name="album_name">HCI_Vista</string>
-    <string name="server_url">http://192.168.0.116/EE368_Android_Tutorial3_Server/computeSIFT.php</string>
+    <string name="server_url">http://ec2-50-112-147-146.us-west-2.compute.amazonaws.com/stanford/computeSIFT.php</string>
+    <string name="title_activity_display_results">DisplayResults</string>
+
 </resources>

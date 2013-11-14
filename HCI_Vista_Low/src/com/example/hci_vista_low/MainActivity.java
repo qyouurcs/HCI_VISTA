@@ -1,12 +1,22 @@
 package com.example.hci_vista_low;
 
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +24,7 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -21,36 +32,27 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.VideoView;
+import android.widget.Button;
 
 public class MainActivity extends Activity {
 
 	private static final int ACTION_TAKE_PHOTO_B = 1;
-
-	private static final String BITMAP_STORAGE_KEY = "viewbitmap";
-	private static final String IMAGEVIEW_VISIBILITY_STORAGE_KEY = "imageviewvisibility";
-	private ImageView mImageView;
-	private Bitmap mImageBitmap;
-
+	public final static String EXTRA_INTENT_MESSAGE = "com.urcs.hci_vista";
+	private Bitmap resultimage;
+	private Context mContext = this;
 	private static final String VIDEO_STORAGE_KEY = "viewvideo";
 	private static final String VIDEOVIEW_VISIBILITY_STORAGE_KEY = "videoviewvisibility";
-	private VideoView mVideoView;
 	private Uri mVideoUri;
-	
-	private String url = "";
+	private String TAG = "DEBUG";
+	private String SERVERURL = "";
 	private String mCurrentPhotoPath;
-
+	private Button takePictureBtn;
 	private static final String JPEG_FILE_PREFIX = "IMG_";
-	private static final String JPEG_FILE_SUFFIX = ".jpg";
 
 	private String mAlbumStorageDirFactory = "";
-
-	/* Photo album for this application */
-	private String getAlbumName() {
-		return getString(R.string.album_name);
-	}
-
+	
+	private boolean mCameraReadyFlag = true;
+	
 	private File getAlbumDir() {
 		File storageDir = null;
 
@@ -81,8 +83,6 @@ public class MainActivity extends Activity {
 				.format(new Date());
 		String imageFileName = JPEG_FILE_PREFIX + timeStamp + "_" +".jpg";
 		File albumF = getAlbumDir();
-		// File imageF = File.createTempFile(imageFileName, JPEG_FILE_SUFFIX,
-		// albumF);
 		File imageF = new File(albumF + "/" + imageFileName);
 		return imageF;
 	}
@@ -93,15 +93,6 @@ public class MainActivity extends Activity {
 		mCurrentPhotoPath = f.getAbsolutePath();
 
 		return f;
-	}
-
-	private void galleryAddPic() {
-		Intent mediaScanIntent = new Intent(
-				"android.intent.action.MEDIA_SCANNER_SCAN_FILE");
-		File f = new File(mCurrentPhotoPath);
-		Uri contentUri = Uri.fromFile(f);
-		mediaScanIntent.setData(contentUri);
-		this.sendBroadcast(mediaScanIntent);
 	}
 
 	private void dispatchTakePictureIntent(int actionCode) {
@@ -122,47 +113,23 @@ public class MainActivity extends Activity {
 	}
 
 	private void handleBigCameraPhoto(Intent data) {
-		/* Get the size of the ImageView */
-		/*
-		Bundle extras = data.getExtras();
-		mImageBitmap = (Bitmap) extras.get("data");
-	    mImageView.setImageBitmap(mImageBitmap);
-	    
-		mImageView.setVisibility(View.VISIBLE);
-		*/
-		if (mCurrentPhotoPath != null) {
-				
-			int targetW = mImageView.getWidth();
-			int targetH = mImageView.getHeight();
-	
+		
+		if (mCurrentPhotoPath != null) {	
 			/* Get the size of the image */
 			BitmapFactory.Options bmOptions = new BitmapFactory.Options();
 			bmOptions.inJustDecodeBounds = true;
 			BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-			int photoW = bmOptions.outWidth;
-			int photoH = bmOptions.outHeight;
-			
+		    Log.v("MainActivity", "CurrentPhotoPath " + mCurrentPhotoPath );
 			/* Figure out which way needs to be reduced less */
 			int scaleFactor = 1;
-			if ((targetW > 0) || (targetH > 0)) {
-				scaleFactor = Math.min(photoW/targetW, photoH/targetH);	
-			}
-	
 			/* Set bitmap options to scale the image decode target */
 			bmOptions.inJustDecodeBounds = false;
 			bmOptions.inSampleSize = scaleFactor;
 			bmOptions.inPurgeable = true;
-	
-			/* Decode the JPEG file into a Bitmap */
-			Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-			//ServerTask task = new ServerTask(url, mContext, mResultView);
-			//task.execute(n.getAbsolutePath());
-			/* Associate the Bitmap to the ImageView */
-			mImageView.setImageBitmap(bitmap);
-			mImageView.setVisibility(View.VISIBLE);
+			/* Decode the JPEG file into a Bitmap */			
+			ServerTask task = new ServerTask();
+			task.execute(mCurrentPhotoPath);
 		}
-		//galleryAddPic();
-		//mCurrentPhotoPath = null;
 	}
 
 	/** Called when the activity is first created. */
@@ -174,64 +141,49 @@ public class MainActivity extends Activity {
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-		url = getResources().getString(R.string.server_url);
-		mImageView = (ImageView) findViewById(R.id.pic);
-		// mVideoView = (VideoView) findViewById(R.id.videoView1);
-		mImageBitmap = null;
+		SERVERURL = getResources().getString(R.string.server_url);
+		takePictureBtn = (Button)findViewById(R.id.takePicture);
+		setBtnListenerOrDisable(takePictureBtn, new Button.OnClickListener(){
+			@Override
+			public void onClick(View v)
+			{
+				dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
+			}
+		}, MediaStore.ACTION_IMAGE_CAPTURE);
 		mVideoUri = null;
-		/*
-		 * //Button picBtn = (Button) findViewById(R.id.btnIntend);
-		 * //setBtnListenerOrDisable( // picBtn, // mTakePicOnClickListener,
-		 * MediaStore.ACTION_IMAGE_CAPTURE );
-		 */
-		Log.d("debug", "s-after dispatch");
-		mAlbumStorageDirFactory = Environment.getExternalStorageDirectory()
-				+ "/DCIM/" + getString(R.string.album_name);
-		dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
-		Log.d("debug", "s-before dispatch");	
+		mAlbumStorageDirFactory = Environment.getExternalStorageDirectory() + "/DCIM/" + getString(R.string.album_name);
 	}
-
+		
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Log.d("ActivityResult", "Activity");
 		switch (requestCode) {
-		case ACTION_TAKE_PHOTO_B: {
-			if (resultCode == RESULT_OK) {
-				handleBigCameraPhoto(data);
-				Log.d("ActivityResult", "Activity");
-			}
-			break;
-		} // ACTION_TAKE_PHOTO_B
+			case ACTION_TAKE_PHOTO_B: {
+				if (resultCode == RESULT_OK) {
+					handleBigCameraPhoto(data);
+					Log.d("ActivityResult", "Activity");
+				}
+				break;
+			} // ACTION_TAKE_PHOTO_B
 		} // switch
 	}
 
 	// Some lifecycle callbacks so that the image can survive orientation change
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		outState.putParcelable(BITMAP_STORAGE_KEY, mImageBitmap);
+		//outState.putParcelable(BITMAP_STORAGE_KEY, mImageBitmap);
 		outState.putParcelable(VIDEO_STORAGE_KEY, mVideoUri);
-		outState.putBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY,
-				(mImageBitmap != null));
-		outState.putBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY,
-				(mVideoUri != null));
+		//outState.putBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY,
+		//		(mImageBitmap != null));
+		outState.putBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY,(mVideoUri != null));
 		super.onSaveInstanceState(outState);
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		mImageBitmap = savedInstanceState.getParcelable(BITMAP_STORAGE_KEY);
+		//mImageBitmap = savedInstanceState.getParcelable(BITMAP_STORAGE_KEY);
 		mVideoUri = savedInstanceState.getParcelable(VIDEO_STORAGE_KEY);
-		mImageView.setImageBitmap(mImageBitmap);
-		mImageView
-				.setVisibility(savedInstanceState
-						.getBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY) ? ImageView.VISIBLE
-						: ImageView.INVISIBLE);
-		mVideoView.setVideoURI(mVideoUri);
-		mVideoView
-				.setVisibility(savedInstanceState
-						.getBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY) ? ImageView.VISIBLE
-						: ImageView.INVISIBLE);
 	}
 
 	/**
@@ -252,8 +204,173 @@ public class MainActivity extends Activity {
 	public static boolean isIntentAvailable(Context context, String action) {
 		final PackageManager packageManager = context.getPackageManager();
 		final Intent intent = new Intent(action);
-		List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
-				PackageManager.MATCH_DEFAULT_ONLY);
+		List<ResolveInfo> list = packageManager.queryIntentActivities(intent,PackageManager.MATCH_DEFAULT_ONLY);
 		return list.size() > 0;
 	}
+	
+	private void setBtnListenerOrDisable( 
+			Button btn, 
+			Button.OnClickListener onClickListener,
+			String intentName ) 
+	{
+		if (isIntentAvailable(this, intentName)) {
+			btn.setOnClickListener(onClickListener);        	
+		}
+		else {
+			btn.setText( getText(R.string.cannot).toString() + " " + btn.getText() );
+			btn.setClickable(false);
+		}
+	}
+
+	public class ServerTask  extends AsyncTask<String, Integer , Void>
+	{
+		public byte[] dataToServer;
+		private String fn = "";
+		public Bitmap processed_image = null;
+		//Task state
+		private final int UPLOADING_PHOTO_STATE  = 0;
+		private final int SERVER_PROC_STATE  = 1;
+		private ProgressDialog dialog;
+		//upload photo to server
+		HttpURLConnection uploadPhoto(FileInputStream fileInputStream)
+		{
+			final String serverFileName = "test"+ (int) Math.round(Math.random()*1000) + ".jpg";		
+			final String lineEnd = "\r\n";
+			final String twoHyphens = "--";
+			final String boundary = "*****";	
+			try
+			{
+				URL url = new URL(SERVERURL);
+				// Open a HTTP connection to the URL
+				final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+				// Allow Inputs
+				conn.setDoInput(true);				
+				// Allow Outputs
+				conn.setDoOutput(true);				
+				// Don't use a cached copy.
+				conn.setUseCaches(false);
+				// Use a post method.
+				conn.setRequestMethod("POST");
+				conn.setRequestProperty("Connection", "Keep-Alive");
+				conn.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
+				
+				DataOutputStream dos = new DataOutputStream( conn.getOutputStream() );
+				
+				dos.writeBytes(twoHyphens + boundary + lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + serverFileName +"\"" + lineEnd);
+				dos.writeBytes(lineEnd);
+				// create a buffer of maximum size
+				int bytesAvailable = fileInputStream.available();
+				int maxBufferSize = 1024;
+				int bufferSize = Math.min(bytesAvailable, maxBufferSize);
+				byte[] buffer = new byte[bufferSize];
+				// read file and write it into form...
+				int bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+				while (bytesRead > 0)
+				{
+					dos.write(buffer, 0, bufferSize);
+					bytesAvailable = fileInputStream.available();
+					bufferSize = Math.min(bytesAvailable, maxBufferSize);
+					bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+				}
+				// send multipart form data after file data...
+				dos.writeBytes(lineEnd);
+				dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+				publishProgress(SERVER_PROC_STATE);
+				// close streams
+				fileInputStream.close();
+				dos.flush();
+				return conn;
+			}
+			catch (MalformedURLException ex){
+				Log.e(TAG, "error: " + ex.getMessage(), ex);
+				return null;
+			}
+			catch (IOException ioe){
+				Log.e(TAG, "error: " + ioe.getMessage(), ioe);
+				return null;
+			}
+		}
+		
+	    //get image result from server and display it in result view
+		void getResultImage(HttpURLConnection conn){		
+			// retrieve the response from server
+			InputStream is;
+			try {
+				is = conn.getInputStream();
+				resultimage = BitmapFactory.decodeStream(is);
+				String result_jpg_fn = fn + "_1.jpg";
+				FileOutputStream fos = new FileOutputStream(result_jpg_fn);
+				resultimage.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+				fos.close();
+				Intent intent = new Intent(MainActivity.this, DisplayResults.class);
+				intent.putExtra(EXTRA_INTENT_MESSAGE, result_jpg_fn);
+				is.close();
+				
+				startActivity(intent);
+			} catch (IOException e) {
+				Log.e(TAG,e.toString());
+				e.printStackTrace();
+			}
+		}
+		//Main code for processing image algorithm on the server
+		void processImage(String inputImageFilePath){			
+			publishProgress(UPLOADING_PHOTO_STATE);
+			Log.v("InputImage", inputImageFilePath);
+			File inputFile = new File(inputImageFilePath);
+			try {
+				FileInputStream fileInputStream  = new FileInputStream(inputFile);
+		    	final HttpURLConnection  conn = uploadPhoto(fileInputStream);
+		    	if (conn != null){
+		    		getResultImage(conn);
+		    	}
+				fileInputStream.close();
+			}
+	        catch (FileNotFoundException ex){
+	        	Log.e(TAG, ex.toString());
+	        }
+	        catch (IOException ex){
+	        	Log.e(TAG, ex.toString());
+	        }
+		}
+		
+	    public ServerTask() {
+	        dialog = new ProgressDialog(mContext);
+	    }		
+		
+	    protected void onPreExecute() {
+	        this.dialog.setMessage("Photo captured");
+	        this.dialog.show();
+	    }
+		@Override
+		protected Void doInBackground(String... params) {			//background operation 
+			String uploadFilePath = params[0];
+			fn = uploadFilePath;
+			processImage(uploadFilePath);
+			//release camera when previous image is processed
+			mCameraReadyFlag = true; 
+			return null;
+		}		
+		//progress update, display dialogs
+		@Override
+	     protected void onProgressUpdate(Integer... progress) {
+	    	 if(progress[0] == UPLOADING_PHOTO_STATE){
+	    		 dialog.setMessage("Uploading");
+	    		 dialog.show();
+	    	 }
+	    	 else if (progress[0] == SERVER_PROC_STATE){
+		           if (dialog.isShowing()) {
+		               dialog.dismiss();
+		         }	    	 
+	    		 dialog.setMessage("Processing");
+	    		 dialog.show();
+	    	 }	         
+	     }		
+	     @Override
+	     protected void onPostExecute(Void param) {
+	           if (dialog.isShowing()) {
+	               dialog.dismiss();
+	           }
+	     }
+	}	
 }

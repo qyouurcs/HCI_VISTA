@@ -1,11 +1,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent" 
-    android:layout_height="fill_parent" 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context=".MainActivity" >
-  <ImageView 
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:visibility="visible"
-      android:id="@+id/pic" />
+<!--
+    <ImageView
+        android:id="@+id/pic"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="invisible" />
+-->
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/myButton"
+        android:layout_marginRight="100px"
+        android:gravity="bottom"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/takePicture"
+        android:layout_width="80dip"
+        android:layout_height="80dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/button_shape"
+        android:padding="5dip"
+        android:text="R"
+        android:textColor="#FFFF00"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/myButton1"
+        android:layout_width="80dip"
+        android:layout_height="80dip"
+        android:layout_alignTop="@+id/takePicture"
+        android:background="@drawable/button_shape"
+        android:src="@drawable/search"
+        android:visibility="visible" />
+
 </RelativeLayout>
