@@ -1,0 +1,29 @@
+package jsoup;
+
+import org.jsoup.Jsoup;
+import org.jsoup.helper.Validate;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+
+public class get_link {
+			
+	 public static void main(String[] args){
+		 	String html = getHtmlByUrl("http://urochester.bncollege.com/webapp/wcs/stores/servlet/CategoryDisplay?categoryId=40000&catalogId=10001&langId=-1&storeId=27055&top=Y/")
+		 	if(html!=null&&!"".equals(html)){
+		 		Document doc = Jsoup.parse(html);
+		 		Elements links_info = doc.select("div.popularPicksContainer>ul.popularPicksListItem>li.quickViewButtonHolder>a>img");
+		 		for (Element link : links_info){
+		 			String src = link.attr("src");
+		 			String title = link.attr("title");
+		 			System.out.println(src+","+title);  
+		 		}
+		 	
+		 	}
+	        
+
+	    }
+
+}

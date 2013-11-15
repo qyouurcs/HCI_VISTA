@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/jsoup/src/jsoup/get_link.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="jsoup.get_link"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="http://urochester.bncollege.com/webapp/wcs/stores/servlet/CategoryDisplay?categoryId=40000&amp;catalogId=10001&amp;langId=-1&amp;storeId=27055&amp;top=Y"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jsoup"/>
+</launchConfiguration>
