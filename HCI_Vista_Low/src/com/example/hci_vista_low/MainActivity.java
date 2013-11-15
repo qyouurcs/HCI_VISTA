@@ -14,7 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -33,6 +32,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -47,10 +48,11 @@ public class MainActivity extends Activity {
 	private String SERVERURL = "";
 	private String mCurrentPhotoPath;
 	private Button takePictureBtn;
+	private ImageButton searchBtn;
 	private static final String JPEG_FILE_PREFIX = "IMG_";
-
+	private TextView url_tv = null;
 	private String mAlbumStorageDirFactory = "";
-	
+
 	private boolean mCameraReadyFlag = true;
 	
 	private File getAlbumDir() {
@@ -111,7 +113,7 @@ public class MainActivity extends Activity {
 		}
 		startActivityForResult(takePictureIntent, actionCode);
 	}
-
+	
 	private void handleBigCameraPhoto(Intent data) {
 		
 		if (mCurrentPhotoPath != null) {	
@@ -150,6 +152,19 @@ public class MainActivity extends Activity {
 				dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
 			}
 		}, MediaStore.ACTION_IMAGE_CAPTURE);
+		url_tv = (TextView)findViewById(R.id.pic_url);
+		searchBtn = (ImageButton)findViewById(R.id.searchBtn);
+		searchBtn.setOnClickListener( new ImageButton.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				dl_image t = new dl_image(mContext);
+				t.execute(url_tv.getText().toString());
+			}
+			
+		});
+		searchBtn.setEnabled(true);
 		mVideoUri = null;
 		mAlbumStorageDirFactory = Environment.getExternalStorageDirectory() + "/DCIM/" + getString(R.string.album_name);
 	}
