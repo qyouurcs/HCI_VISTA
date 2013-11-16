@@ -10,16 +10,7 @@
         android:layout_height="fill_parent"
         android:visibility="invisible" />
 -->
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/myButton"
-        android:layout_marginRight="100px"
-        android:gravity="bottom"
-        android:orientation="vertical" >
-    </LinearLayout>
+
 
     <Button
         android:id="@+id/takePicture"
@@ -29,20 +20,11 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="18dp"
         android:background="@drawable/button_shape"
-        android:padding="5dip"
         android:text="R"
         android:textColor="#FFFF00"
         android:textSize="50sp"
         android:textStyle="bold" />
-
-    <ImageButton
-        android:id="@+id/searchBtn"
-        android:layout_width="80dip"
-        android:layout_height="80dip"
-        android:layout_alignTop="@+id/takePicture"
-        android:background="@drawable/button_shape"
-        android:src="@drawable/search"
-        android:visibility="visible" />
+    
 
     <EditText
         android:id="@+id/pic_url"
@@ -62,5 +44,27 @@
         android:layout_marginBottom="19dp"
         android:text="@string/url_hint"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageButton
+        android:id="@+id/browse_gallery"
+        android:layout_width="80dip"
+        android:layout_height="80dip"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="18dip"
+        android:layout_below="@+id/pic_url"
+        android:background="@drawable/button_shape"
+        android:src="@drawable/ic_action_camera"
+        android:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/searchBtn"
+        android:layout_width="80dip"
+        android:layout_height="80dip"
+        android:layout_marginLeft="18dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/takePicture"
+        android:background="@drawable/button_shape"
+        android:src="@drawable/search"
+        android:visibility="visible" />
 
 </RelativeLayout>

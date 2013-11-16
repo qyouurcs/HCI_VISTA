@@ -48,6 +48,7 @@ public class MainActivity extends Activity {
 	private String SERVERURL = "";
 	private String mCurrentPhotoPath;
 	private Button takePictureBtn;
+	private ImageButton browseBtn;
 	private ImageButton searchBtn;
 	private static final String JPEG_FILE_PREFIX = "IMG_";
 	private TextView url_tv = null;
@@ -120,7 +121,7 @@ public class MainActivity extends Activity {
 			/* Get the size of the image */
 			BitmapFactory.Options bmOptions = new BitmapFactory.Options();
 			bmOptions.inJustDecodeBounds = true;
-			BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+			//BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 		    Log.v("MainActivity", "CurrentPhotoPath " + mCurrentPhotoPath );
 			/* Figure out which way needs to be reduced less */
 			int scaleFactor = 1;
@@ -128,9 +129,12 @@ public class MainActivity extends Activity {
 			bmOptions.inJustDecodeBounds = false;
 			bmOptions.inSampleSize = scaleFactor;
 			bmOptions.inPurgeable = true;
-			/* Decode the JPEG file into a Bitmap */			
-			ServerTask task = new ServerTask();
-			task.execute(mCurrentPhotoPath);
+			/* Decode the JPEG file into a Bitmap */
+			Intent intent = new Intent(MainActivity.this, DisplayResults.class);
+			intent.putExtra(EXTRA_INTENT_MESSAGE, mCurrentPhotoPath);
+			startActivity(intent);
+			//ServerTask task = new ServerTask();
+			//task.execute(mCurrentPhotoPath);
 		}
 	}
 
@@ -145,6 +149,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		SERVERURL = getResources().getString(R.string.server_url);
 		takePictureBtn = (Button)findViewById(R.id.takePicture);
+		
 		setBtnListenerOrDisable(takePictureBtn, new Button.OnClickListener(){
 			@Override
 			public void onClick(View v)
@@ -154,6 +159,7 @@ public class MainActivity extends Activity {
 		}, MediaStore.ACTION_IMAGE_CAPTURE);
 		url_tv = (TextView)findViewById(R.id.pic_url);
 		searchBtn = (ImageButton)findViewById(R.id.searchBtn);
+		
 		searchBtn.setOnClickListener( new ImageButton.OnClickListener()
 		{
 			@Override
@@ -165,6 +171,16 @@ public class MainActivity extends Activity {
 			
 		});
 		searchBtn.setEnabled(true);
+		browseBtn = (ImageButton) findViewById(R.id.browse_gallery);
+		browseBtn.setOnClickListener( new ImageButton.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent intent = new Intent(MainActivity.this, ImageGallery.class);
+				startActivity(intent);
+			}
+		});
 		mVideoUri = null;
 		mAlbumStorageDirFactory = Environment.getExternalStorageDirectory() + "/DCIM/" + getString(R.string.album_name);
 	}

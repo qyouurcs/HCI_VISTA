@@ -1,0 +1,30 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0099cc"
+    tools:context=".ImageGallery" >
+
+   
+      <LinearLayout
+            android:id="@+id/fullscreen_content_controls"
+            style="?buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/black_overlay"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent" >
+		<GridView
+	        android:id="@+id/image_gallery"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:columnWidth="100dp"
+	        android:gravity="center"
+	        android:numColumns="auto_fit"
+	        android:drawSelectorOnTop="true"
+	        android:stretchMode="columnWidth" >
+	    </GridView>
+      
+        </LinearLayout>
+ </FrameLayout>

@@ -13,5 +13,8 @@
     <string name="server_url">http://ec2-50-112-147-146.us-west-2.compute.amazonaws.com/stanford/computeSIFT.php</string>
     <string name="title_activity_display_results">DisplayResults</string>
     <string name="url_hint">Paste the Image URL Here</string>
+    <string name="title_activity_image_gallery">ImageGallery</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>
