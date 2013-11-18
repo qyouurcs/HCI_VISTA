@@ -1,0 +1,39 @@
+package jsoup;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+/**
+* 使用URLConnection下载文件或图片并保存到本地。
+*
+* @author 老紫竹(laozizhu.com)
+*/
+public class URLConnectionDownloader {
+	/**
+	   *
+	   * @param urlString 
+	   *          Requested img
+	   * @param filename
+	   *          Filename
+	   * @throws Exception
+	   */
+	public static void download(String urlString, String filename) throws Exception {
+	    // reconstruct url
+	    URL url = new URL(urlString);
+	    // open url
+	    URLConnection con = url.openConnection();
+	    InputStream is = con.getInputStream();
+	    // 1K buffer
+	    byte[] bs = new byte[1024];
+	    int len;
+	    OutputStream os = new FileOutputStream(filename);
+	    // Read
+	    while ((len = is.read(bs)) != -1) {
+	      os.write(bs, 0, len);
+	    }
+	
+	    os.close();
+	    is.close();
+	} 
+}

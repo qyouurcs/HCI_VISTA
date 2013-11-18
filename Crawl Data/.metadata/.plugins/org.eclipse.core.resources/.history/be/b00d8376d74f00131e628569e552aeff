@@ -1,0 +1,60 @@
+package jsoup;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.helper.Validate;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.io.IOException;
+
+public class get_link {
+	public static void main(String[] args) throws Exception{
+		String html = get_html.getHtmlByUrl("http://urochester.bncollege.com/webapp/wcs/stores/servlet/SubcategoryView?parentCatId=40360&level=2&categoryId=40425&catalogId=10001&langId=-1&storeId=27055&topCatId=40000");
+	 	if(html!=null&&!"".equals(html)){
+	 		Document doc = Jsoup.parse(html);
+	 		Elements items = doc.select("div.popularPicksContainer>ul.popularPicksListItem>li.quickViewButtonHolder>a");
+ 			int x = 1;
+	 		for (Element item: items){
+	 			Elements imgs = item.getElementsByTag("img");	 	 			
+	 			
+	 			String i_url = item.attr("href");// get i_url for item url
+	 			Elements prices = doc.select("div.popularPicksContainer>ul.popularPicksListItem>li.quickViewButtonHolder>p.apparelPopularPicksPrice");
+	 			for (Element price:prices){
+	 				Elements pcs = price.getElementsByClass("listPriceStrong");
+	 				for (Element pc:pcs){
+	 					String cur_pc = ;
+	 					System.out.println(cur_pc);
+	 				}
+	 			}
+	 			//get src for imgs and title for item name, save imgs to local
+	 			for (Element img : imgs){
+		 			String src = img.attr("src");
+		 			String title = img.attr("title");
+		 			//save file
+		 			String path = "C:\\Users\\Administrator\\Desktop\\workplace\\test\\";
+		 			String filename = "test"+ Integer.toString(x)+".jpg";
+		 			save_img.download(src,path,filename );
+		 			
+		 			System.out.println(title+","+","+i_url+","+src);
+		 			x ++;
+	 			}
+	 		}	    
+	 	}
+	 	}
+	}
+
+
