@@ -63,5 +63,9 @@ public class ListOfSelectors {
 	    	Selector p = itr.next();
 	    	canvas.drawRect(p.getTop().x, p.getTop().y, p.getBottom().x, p.getBottom().y, paint); 
 	    }
+	    
+	    if(twoPoints == true){
+	    	canvas.drawPoint(tempP.x, tempP.y, paint);
+	    }
 	}
 }

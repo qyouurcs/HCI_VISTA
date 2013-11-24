@@ -20,7 +20,7 @@ import com.example.hci_vista_low.ListOfSelectors;
 public class SingleTouchEventView extends ImageView {
   private Paint paint = new Paint();
   private ListOfSelectors sels = new ListOfSelectors();
-  private static final String    TAG                 = "LAM: ";
+  private static final String    TAG                 = "LAM";
   Bitmap image;
   
   public SingleTouchEventView(Context context, AttributeSet attrs, String fn) {
@@ -49,7 +49,11 @@ public class SingleTouchEventView extends ImageView {
     float eventY = event.getY();
     
     switch (event.getAction()) {
+    case MotionEvent.ACTION_POINTER_DOWN:
+        Log.i(TAG, "APD Coordinates "+ event.getX() + " "+ event.getY());                   
+        break;
     case MotionEvent.ACTION_DOWN:
+    	Log.i(TAG, "AD Coordinates "+ event.getX() + " "+ event.getY()); 
     	sels.addPoint(new Point((int)eventX, (int)eventY));
     	break;
     case MotionEvent.ACTION_MOVE:
