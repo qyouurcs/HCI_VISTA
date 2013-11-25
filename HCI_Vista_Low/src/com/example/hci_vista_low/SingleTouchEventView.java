@@ -25,8 +25,6 @@ public class SingleTouchEventView extends ImageView {
   
   public SingleTouchEventView(Context context, AttributeSet attrs, String fn) {
     super(context, attrs);
-    Log.i(TAG, "file open name " + fn); 
-    
     paint.setAntiAlias(true);
     paint.setStrokeWidth(6f);
     paint.setColor(Color.BLACK);
@@ -49,6 +47,10 @@ public class SingleTouchEventView extends ImageView {
     float eventY = event.getY();
     
     switch (event.getAction()) {
+    case MotionEvent.ACTION_MOVE:
+    	Log.i(TAG, "MOVE Coordinates "+ event.getX() + " "+ event.getY());
+    	sels.movingPoint(new Point((int)eventX, (int)eventY));
+    	break;
     case MotionEvent.ACTION_POINTER_DOWN:
         Log.i(TAG, "APD Coordinates "+ event.getX() + " "+ event.getY());                   
         break;
@@ -56,10 +58,9 @@ public class SingleTouchEventView extends ImageView {
     	Log.i(TAG, "AD Coordinates "+ event.getX() + " "+ event.getY()); 
     	sels.addPoint(new Point((int)eventX, (int)eventY));
     	break;
-    case MotionEvent.ACTION_MOVE:
-      break;
     case MotionEvent.ACTION_UP:
-      // nothing to do
+    	Log.i(TAG, "UP Coordinates "+ event.getX() + " "+ event.getY());
+    	sels.addMovingPoint(new Point((int)eventX, (int)eventY));
       break;
     default:
       return false;

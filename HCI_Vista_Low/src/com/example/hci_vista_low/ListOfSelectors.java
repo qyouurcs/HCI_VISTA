@@ -12,19 +12,38 @@ import org.opencv.core.Scalar;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.RectF;
 import android.util.Log;
 
 import com.example.hci_vista_low.Selector;
 
 public class ListOfSelectors {
 	private List selectors;
-	private Point tempP;
+	private int moveCount = 0;
+	private Point tempP, moveP;
 	private boolean twoPoints = false;
+	private boolean movingPoints = false;
 	
 	public ListOfSelectors(){
 		selectors = new ArrayList();
 		twoPoints = false;
+		movingPoints = false;
+		moveCount = 0;
 	}
+	
+	public void movingPoint(Point p){
+		if(moveCount++ > 5){
+			movingPoints = true;
+			moveP = p;
+		}
+	}
+	
+	public void addMovingPoint(Point p){
+		if( movingPoints == true && moveCount > 5){
+			this.addPoint(p);
+		}
+	}
+	
 	
 	public void addPoint(Point p){
 		if(twoPoints == false){
@@ -48,8 +67,19 @@ public class ListOfSelectors {
 				maxY = p.y;
 				minY = tempP.y;
 			}		
-			this.selectors.add(new Selector(minX, minY, maxX, maxY));
-			twoPoints = false;
+			int absDist = (maxX-minX) + (maxY-minY);
+			
+			if(this.movingPoints == false){
+				this.selectors.add(new Selector(minX, minY, maxX, maxY));
+				twoPoints = false;
+				movingPoints = false;
+				tempP = null;
+			}else if(this.movingPoints == true && absDist >= 20){
+				this.selectors.add(new Selector(minX, minY, maxX, maxY));
+				movingPoints = false;
+				twoPoints = false;
+			}
+			moveCount = 0;
 		}
 	}
 	
@@ -66,6 +96,12 @@ public class ListOfSelectors {
 	    
 	    if(twoPoints == true){
 	    	canvas.drawPoint(tempP.x, tempP.y, paint);
+	    }
+	    
+	    if(movingPoints == true){
+	    	RectF r = new RectF(Math.min(tempP.x, moveP.x), Math.min(tempP.y, moveP.y), 
+	    			Math.max(tempP.x, moveP.x), Math.max(tempP.y, moveP.y));
+	    	canvas.drawRect(r, paint);
 	    }
 	}
 }
