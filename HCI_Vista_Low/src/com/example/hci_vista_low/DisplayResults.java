@@ -150,7 +150,7 @@ public class DisplayResults extends Activity {
 
 	class AsyncItemDec extends AsyncTask<Integer, Integer, String> {
 		protected String doInBackground(Integer... params) {
-
+		
 			for (int i = 0; i <= 100; i++) {
 				pb.setProgress(i);
 				publishProgress(i, 5);

@@ -7,8 +7,7 @@
           android:showAsAction="ifRoom"
           android:title="@string/action_search"/>
     <item android:id="@+id/action_compose"
-          android:icon="@drawable/ic_launcher_voice"
+          android:icon="@drawable/ic_action_speech"
           android:title="@string/action_speech" 
           android:showAsAction= "ifRoom"/>
-
 </menu>
