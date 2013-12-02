@@ -3,6 +3,7 @@ package com.example.hci_vista_low;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -10,6 +11,7 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
@@ -18,35 +20,53 @@ import android.util.Log;
 import com.example.hci_vista_low.Selector;
 
 public class ListOfSelectors {
-	private List selectors;
+	// maximium number of bounding boxes
+	private final static int MaxBoxs = 2;
+	private static boolean isEditable = true;
+	private static boolean isAddable = true;
+	private List<Selector> selectors;
 	private int moveCount = 0;
 	private Point tempP, moveP;
+	
 	private boolean twoPoints = false;
-	private boolean movingPoints = false;
-	
+	private Random rnd = new Random(); 
+	private int color;
+
+	public void setIsAddable(boolean v){
+		isAddable = v;
+	}
+	public void flipAddable(){
+			isAddable = !isAddable;
+	}
 	public ListOfSelectors(){
-		selectors = new ArrayList();
+		selectors = new ArrayList<Selector>();
 		twoPoints = false;
-		movingPoints = false;
-		moveCount = 0;
+	}
+	public List<Selector> getSelectors()
+	{
+		return selectors;
+	}
+	public void clear()
+	{
+		selectors.clear();
 	}
 	
-	public void movingPoint(Point p){
-		if(moveCount++ > 5){
-			movingPoints = true;
-			moveP = p;
-		}
+	public int size()
+	{
+		return selectors.size();
 	}
-	
-	public void addMovingPoint(Point p){
-		if( movingPoints == true && moveCount > 5){
-			this.addPoint(p);
-		}
+
+	public void addSelector(RectF r, int color){
+		this.addSelector(new Selector( (int) r.left, (int) r.top, (int) r.right, (int) r.bottom, color));
 	}
 	
 	
 	public void addPoint(Point p){
+		if(isAddable == false)
+			return;
+		
 		if(twoPoints == false){
+			color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)); 
 			tempP = p;
 			twoPoints = true;
 		}
@@ -68,18 +88,10 @@ public class ListOfSelectors {
 				minY = tempP.y;
 			}		
 			int absDist = (maxX-minX) + (maxY-minY);
-			
-			if(this.movingPoints == false){
-				this.selectors.add(new Selector(minX, minY, maxX, maxY));
-				twoPoints = false;
-				movingPoints = false;
-				tempP = null;
-			}else if(this.movingPoints == true && absDist >= 20){
-				this.selectors.add(new Selector(minX, minY, maxX, maxY));
-				movingPoints = false;
-				twoPoints = false;
-			}
-			moveCount = 0;
+			this.selectors.add(new Selector(minX, minY, maxX, maxY, color));
+			twoPoints = false;
+			tempP = null;
+
 		}
 	}
 	
@@ -87,21 +99,27 @@ public class ListOfSelectors {
 		selectors.add(s);
 	}
 	
+	public Selector getSelector(int x, int y){
+		Iterator<Selector> itr = selectors.iterator();
+	    while(itr.hasNext()) {
+	    	Selector p = itr.next();
+	    	if(p.inBound(x, y))
+	    		return p;
+	    }
+	    return null;
+	}
+	
 	public void drawSelectors(Canvas canvas, Paint paint){
 		Iterator<Selector> itr = selectors.iterator();
 	    while(itr.hasNext()) {
 	    	Selector p = itr.next();
+	    	paint.setColor(p.getColor());
 	    	canvas.drawRect(p.getTop().x, p.getTop().y, p.getBottom().x, p.getBottom().y, paint); 
 	    }
 	    
-	    if(twoPoints == true){
+	    if(twoPoints == true){  
+			paint.setColor(color);
 	    	canvas.drawPoint(tempP.x, tempP.y, paint);
-	    }
-	    
-	    if(movingPoints == true){
-	    	RectF r = new RectF(Math.min(tempP.x, moveP.x), Math.min(tempP.y, moveP.y), 
-	    			Math.max(tempP.x, moveP.x), Math.max(tempP.y, moveP.y));
-	    	canvas.drawRect(r, paint);
 	    }
 	}
 }

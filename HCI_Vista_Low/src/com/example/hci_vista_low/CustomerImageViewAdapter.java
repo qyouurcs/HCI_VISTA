@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -19,6 +20,7 @@ public class CustomerImageViewAdapter extends ArrayAdapter<String>{
 		private int layoutResourceId;
 		private ArrayList<String> data = new ArrayList<String>();
 
+		
 		public CustomerImageViewAdapter(Context context, int layoutResourceId,ArrayList<String> data) {
 			super(context, layoutResourceId, data);
 			this.layoutResourceId = layoutResourceId;

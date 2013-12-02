@@ -14,9 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-
-
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -36,6 +33,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -57,6 +55,7 @@ public class MainActivity extends Activity {
 	private static final String JPEG_FILE_PREFIX = "IMG_";
 	private TextView url_tv = null;
 	private String mAlbumStorageDirFactory = "";
+
 
 	private boolean mCameraReadyFlag = true;
 	

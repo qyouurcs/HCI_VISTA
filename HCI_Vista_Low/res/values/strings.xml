@@ -10,7 +10,7 @@
     <string name="btnIntendV">Take Video</string>
     <string name="cannot">Cannot</string>
     <string name="album_name">HCI_Vista</string>
-    <string name="server_url">http://ec2-50-112-147-146.us-west-2.compute.amazonaws.com/stanford/computeSIFT.php</string>
+    <string name="server_url">http://ec2-54-200-138-198.us-west-2.compute.amazonaws.com/vista/vista.php</string>
     <string name="title_activity_display_results">DisplayResults</string>
     <string name="url_hint">Paste the Image URL Here</string>
     <string name="title_activity_image_gallery">ImageGallery</string>
@@ -18,5 +18,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="action_speech">Speech Recognition</string>
     <string name="action_search">Search</string>
-
+	<string name="submit_btn">Submit</string>
+	<string name="cancel_btn">Cancel</string>
 </resources>

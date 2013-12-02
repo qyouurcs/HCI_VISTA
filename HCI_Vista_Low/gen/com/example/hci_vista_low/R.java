@@ -70,23 +70,27 @@ containing a value of this type.
         public static final int takepicture=0x7f020007;
     }
     public static final class id {
-        public static final int action_compose=0x7f04000f;
-        public static final int action_search=0x7f04000e;
-        public static final int action_settings=0x7f040010;
+        public static final int action_compose=0x7f040013;
+        public static final int action_search=0x7f040012;
+        public static final int action_settings=0x7f040014;
         public static final int any=0x7f040000;
         public static final int back=0x7f040001;
-        public static final int browse_gallery=0x7f04000b;
+        public static final int bottomBar=0x7f040006;
+        public static final int browse_gallery=0x7f04000f;
+        public static final int btn_cancel=0x7f040008;
+        public static final int btn_submit=0x7f040007;
         public static final int front=0x7f040002;
-        public static final int fullscreen_content_controls=0x7f040006;
-        public static final int image=0x7f04000d;
-        public static final int image_gallery=0x7f040007;
+        public static final int fullscreen_content_controls=0x7f04000a;
+        public static final int image=0x7f040011;
+        public static final int image_gallery=0x7f04000b;
         public static final int item_dec_progress=0x7f040005;
-        public static final int pic_url=0x7f040009;
+        public static final int json_result=0x7f040009;
+        public static final int pic_url=0x7f04000d;
         public static final int result_pic=0x7f040003;
-        public static final int searchBtn=0x7f04000c;
+        public static final int searchBtn=0x7f040010;
         public static final int single_touch=0x7f040004;
-        public static final int takePicture=0x7f040008;
-        public static final int url_hint=0x7f04000a;
+        public static final int takePicture=0x7f04000c;
+        public static final int url_hint=0x7f04000e;
     }
     public static final class layout {
         public static final int activity_display_results=0x7f030000;
@@ -107,12 +111,14 @@ containing a value of this type.
         public static final int btnIntend=0x7f070004;
         public static final int btnIntendS=0x7f070005;
         public static final int btnIntendV=0x7f070006;
+        public static final int cancel_btn=0x7f070012;
         public static final int cannot=0x7f070007;
         public static final int dummy_button=0x7f07000d;
         public static final int dummy_content=0x7f07000e;
         public static final int hello=0x7f070003;
         public static final int hello_world=0x7f070002;
         public static final int server_url=0x7f070009;
+        public static final int submit_btn=0x7f070011;
         public static final int title_activity_display_results=0x7f07000a;
         public static final int title_activity_image_gallery=0x7f07000c;
         public static final int url_hint=0x7f07000b;

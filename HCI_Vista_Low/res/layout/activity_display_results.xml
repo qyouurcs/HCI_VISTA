@@ -25,6 +25,7 @@
 	    android:adjustViewBounds="true"
 	    >
 	</com.example.hci_vista_low.SingleTouchEventView>
+	
 	<ProgressBar
 	     android:id="@+id/item_dec_progress"
 	     android:layout_width="wrap_content"
@@ -35,4 +36,32 @@
 	     android:layout_weight="2" >
 	 
 	 </ProgressBar>
+	 <LinearLayout
+		android:id="@+id/bottomBar"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:orientation="horizontal"
+		android:visibility="invisible"
+		android:layout_alignParentBottom="true">
+		 <Button
+	     android:id="@+id/btn_submit"
+	     android:layout_width="0dip" 
+	     android:layout_height="wrap_content"
+	     android:layout_weight=".50"
+	     android:text="@string/submit_btn" />
+		 <Button
+	     android:id="@+id/btn_cancel"
+	     android:layout_width="0dip" 
+	     android:layout_height="wrap_content"
+	     android:layout_weight=".50"
+	     android:text="@string/cancel_btn" />
+</LinearLayout>
+
+	 <TextView
+	     android:id="@+id/json_result"
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:visibility="invisible"
+	     android:textAppearance="?android:attr/textAppearanceLarge" />
+
 </RelativeLayout>
