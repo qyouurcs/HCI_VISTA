@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -28,6 +30,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -56,7 +59,7 @@ public class MainActivity extends Activity {
 	private TextView url_tv = null;
 	private String mAlbumStorageDirFactory = "";
 
-
+	private ScaleGestureDetector scaleDetector;
 	private boolean mCameraReadyFlag = true;
 	
 	private File getAlbumDir() {
@@ -145,6 +148,7 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		scaleDetector = new ScaleGestureDetector(this, new ScaleListener());
 		
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -408,4 +412,40 @@ public class MainActivity extends Activity {
 	           }
 	     }
 	}	
+	
+	private class ScaleListener extends
+	ScaleGestureDetector.SimpleOnScaleGestureListener {
+
+@Override
+public boolean onScale(ScaleGestureDetector detector) {
+	Log.i(TAG, "onScale " + 1);
+	
+
+	return true;
+
+}
+
+
+
+
+ @Override
+ public boolean onScaleBegin(ScaleGestureDetector detector) {
+  // TODO Auto-generated method stub
+	 Log.i(TAG, "onScaleBegin " + 2);
+  return true;
+ }
+
+ @Override
+ public void onScaleEnd(ScaleGestureDetector detector) {
+  // TODO Auto-generated method stub
+	 Log.i(TAG, "onScaleEnd " + 3);
+	
+ }
+
+ 
+ 
+ 
+
+}
+
 }

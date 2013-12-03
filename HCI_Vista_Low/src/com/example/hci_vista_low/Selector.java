@@ -5,6 +5,7 @@ import java.util.Random;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.RectF;
+import android.util.Log;
 
 
 public class Selector {
@@ -12,6 +13,7 @@ public class Selector {
 	private Point bottom;
 	private int color = 0;
 	
+	// constructors
 	public Selector(){
 		top = new Point();
 		bottom = new Point();
@@ -24,6 +26,7 @@ public class Selector {
 		this.color = color;
 	}
 	
+	// determine if a point is in bound.
 	public boolean inBound(int x, int y){
 		if( x >= top.x && x <= bottom.x && y >= top.y && y <= bottom.y )
 			return true;
@@ -31,11 +34,27 @@ public class Selector {
 			return false;
 	}
 	
+	// move bounding box.
 	public void move(int x, int y){
 		top.y -= y;
 		top.x -= x;
 		bottom.y -= y;
 		bottom.x -= x;
+	}
+	
+	// scale bounding box.
+	public void scale(float f){
+		int centerX = (bottom.x+top.x)/2;
+		int centerY = (bottom.y+top.y)/2;
+		float distx = bottom.x - top.x;
+		float disty = bottom.y - top.y;
+		distx *=f;
+		disty *=f;
+		
+		top.x = (int) (centerX - distx/2.0);
+		top.y = (int) (centerY - disty/2.0);
+		bottom.x = (int) (centerX + distx/2.0);
+		bottom.y = (int) (centerY + disty/2.0);	
 	}
 	
 	public RectF getRect(){
