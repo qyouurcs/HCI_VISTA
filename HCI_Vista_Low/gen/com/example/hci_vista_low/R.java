@@ -65,9 +65,10 @@ containing a value of this type.
         public static final int ic_action_search=0x7f020002;
         public static final int ic_action_speech=0x7f020003;
         public static final int ic_launcher=0x7f020004;
-        public static final int image_selector=0x7f020005;
-        public static final int search=0x7f020006;
-        public static final int takepicture=0x7f020007;
+        public static final int ic_launcher_voice=0x7f020005;
+        public static final int image_selector=0x7f020006;
+        public static final int search=0x7f020007;
+        public static final int takepicture=0x7f020008;
     }
     public static final class id {
         public static final int action_compose=0x7f040013;

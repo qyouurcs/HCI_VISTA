@@ -14,8 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -39,7 +37,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 public class MainActivity extends Activity {
 
 	private static final int ACTION_TAKE_PHOTO_B = 1;
@@ -58,10 +55,8 @@ public class MainActivity extends Activity {
 	private static final String JPEG_FILE_PREFIX = "IMG_";
 	private TextView url_tv = null;
 	private String mAlbumStorageDirFactory = "";
-
-	private ScaleGestureDetector scaleDetector;
 	private boolean mCameraReadyFlag = true;
-	
+
 	private File getAlbumDir() {
 		File storageDir = null;
 
@@ -90,29 +85,28 @@ public class MainActivity extends Activity {
 		// Create an image file name
 		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
 				.format(new Date());
-		String imageFileName = JPEG_FILE_PREFIX + timeStamp + "_" +".jpg";
+		String imageFileName = JPEG_FILE_PREFIX + timeStamp + "_" + ".jpg";
 		File albumF = getAlbumDir();
 		File imageF = new File(albumF + "/" + imageFileName);
 		return imageF;
 	}
 
 	private File setUpPhotoFile() throws IOException {
-
 		File f = createImageFile();
 		mCurrentPhotoPath = f.getAbsolutePath();
-
 		return f;
 	}
 
 	private void dispatchTakePictureIntent(int actionCode) {
 
-		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);	
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		File f = null;
-		
+
 		try {
 			f = setUpPhotoFile();
 			mCurrentPhotoPath = f.getAbsolutePath();
-			takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+			takePictureIntent
+					.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
 		} catch (IOException e) {
 			e.printStackTrace();
 			f = null;
@@ -120,27 +114,15 @@ public class MainActivity extends Activity {
 		}
 		startActivityForResult(takePictureIntent, actionCode);
 	}
-	
+
 	private void handleBigCameraPhoto(Intent data) {
-		
-		if (mCurrentPhotoPath != null) {	
-			/* Get the size of the image */
-			BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-			bmOptions.inJustDecodeBounds = true;
-			//BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-		    Log.v("MainActivity", "CurrentPhotoPath " + mCurrentPhotoPath );
-			/* Figure out which way needs to be reduced less */
-			int scaleFactor = 1;
-			/* Set bitmap options to scale the image decode target */
-			bmOptions.inJustDecodeBounds = false;
-			bmOptions.inSampleSize = scaleFactor;
-			bmOptions.inPurgeable = true;
+
+		if (mCurrentPhotoPath != null) {
+			Log.v("MainActivity", "CurrentPhotoPath " + mCurrentPhotoPath);
 			/* Decode the JPEG file into a Bitmap */
 			Intent intent = new Intent(MainActivity.this, DisplayResults.class);
 			intent.putExtra(EXTRA_INTENT_MESSAGE, mCurrentPhotoPath);
 			startActivity(intent);
-			//ServerTask task = new ServerTask();
-			//task.execute(mCurrentPhotoPath);
 		}
 	}
 
@@ -148,80 +130,76 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		scaleDetector = new ScaleGestureDetector(this, new ScaleListener());
-		
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		SERVERURL = getResources().getString(R.string.server_url);
-		takePictureBtn = (Button)findViewById(R.id.takePicture);
-		
-		setBtnListenerOrDisable(takePictureBtn, new Button.OnClickListener(){
+		takePictureBtn = (Button) findViewById(R.id.takePicture);
+
+		setBtnListenerOrDisable(takePictureBtn, new Button.OnClickListener() {
 			@Override
-			public void onClick(View v)
-			{
+			public void onClick(View v) {
 				dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
 			}
 		}, MediaStore.ACTION_IMAGE_CAPTURE);
-		url_tv = (TextView)findViewById(R.id.pic_url);
-		searchBtn = (ImageButton)findViewById(R.id.searchBtn);
-		
-		searchBtn.setOnClickListener( new ImageButton.OnClickListener()
-		{
+		url_tv = (TextView) findViewById(R.id.pic_url);
+		searchBtn = (ImageButton) findViewById(R.id.searchBtn);
+
+		searchBtn.setOnClickListener(new ImageButton.OnClickListener() {
 			@Override
-			public void onClick(View v)
-			{
+			public void onClick(View v) {
 				dl_image t = new dl_image(mContext);
 				t.execute(url_tv.getText().toString());
 			}
-			
+
 		});
 		searchBtn.setEnabled(true);
 		browseBtn = (ImageButton) findViewById(R.id.browse_gallery);
-		browseBtn.setOnClickListener( new ImageButton.OnClickListener()
-		{
+		browseBtn.setOnClickListener(new ImageButton.OnClickListener() {
 			@Override
-			public void onClick(View v)
-			{
-				Intent intent = new Intent(MainActivity.this, ImageGallery.class);
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this,
+						ImageGallery.class);
 				startActivity(intent);
 			}
 		});
 		mVideoUri = null;
-		mAlbumStorageDirFactory = Environment.getExternalStorageDirectory() + "/DCIM/" + getString(R.string.album_name);
+		mAlbumStorageDirFactory = Environment.getExternalStorageDirectory()
+				+ "/DCIM/" + getString(R.string.album_name);
 	}
-		
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Log.d("ActivityResult", "Activity");
 		switch (requestCode) {
-			case ACTION_TAKE_PHOTO_B: {
-				if (resultCode == RESULT_OK) {
-					handleBigCameraPhoto(data);
-					Log.d("ActivityResult", "Activity");
-				}
-				break;
-			} // ACTION_TAKE_PHOTO_B
+		case ACTION_TAKE_PHOTO_B: {
+			if (resultCode == RESULT_OK) {
+				handleBigCameraPhoto(data);
+				Log.d("ActivityResult", "Activity");
+			}
+			break;
+		} // ACTION_TAKE_PHOTO_B
 		} // switch
 	}
 
 	// Some lifecycle callbacks so that the image can survive orientation change
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		//outState.putParcelable(BITMAP_STORAGE_KEY, mImageBitmap);
+		// outState.putParcelable(BITMAP_STORAGE_KEY, mImageBitmap);
 		outState.putParcelable(VIDEO_STORAGE_KEY, mVideoUri);
-		//outState.putBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY,
-		//		(mImageBitmap != null));
-		outState.putBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY,(mVideoUri != null));
+		// outState.putBoolean(IMAGEVIEW_VISIBILITY_STORAGE_KEY,
+		// (mImageBitmap != null));
+		outState.putBoolean(VIDEOVIEW_VISIBILITY_STORAGE_KEY,
+				(mVideoUri != null));
 		super.onSaveInstanceState(outState);
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		//mImageBitmap = savedInstanceState.getParcelable(BITMAP_STORAGE_KEY);
+		// mImageBitmap = savedInstanceState.getParcelable(BITMAP_STORAGE_KEY);
 		mVideoUri = savedInstanceState.getParcelable(VIDEO_STORAGE_KEY);
 	}
 
@@ -243,60 +221,60 @@ public class MainActivity extends Activity {
 	public static boolean isIntentAvailable(Context context, String action) {
 		final PackageManager packageManager = context.getPackageManager();
 		final Intent intent = new Intent(action);
-		List<ResolveInfo> list = packageManager.queryIntentActivities(intent,PackageManager.MATCH_DEFAULT_ONLY);
+		List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
+				PackageManager.MATCH_DEFAULT_ONLY);
 		return list.size() > 0;
 	}
-	
-	private void setBtnListenerOrDisable( 
-			Button btn, 
-			Button.OnClickListener onClickListener,
-			String intentName ) 
-	{
+
+	private void setBtnListenerOrDisable(Button btn,
+			Button.OnClickListener onClickListener, String intentName) {
 		if (isIntentAvailable(this, intentName)) {
-			btn.setOnClickListener(onClickListener);        	
-		}
-		else {
-			btn.setText( getText(R.string.cannot).toString() + " " + btn.getText() );
+			btn.setOnClickListener(onClickListener);
+		} else {
+			btn.setText(getText(R.string.cannot).toString() + " "
+					+ btn.getText());
 			btn.setClickable(false);
 		}
 	}
 
-	public class ServerTask  extends AsyncTask<String, Integer , Void>
-	{
+	public class ServerTask extends AsyncTask<String, Integer, Void> {
 		public byte[] dataToServer;
 		private String fn = "";
-		public Bitmap processed_image = null;
-		//Task state
-		private final int UPLOADING_PHOTO_STATE  = 0;
-		private final int SERVER_PROC_STATE  = 1;
+		// Task state
+		private final int UPLOADING_PHOTO_STATE = 0;
+		private final int SERVER_PROC_STATE = 1;
 		private ProgressDialog dialog;
-		//upload photo to server
-		HttpURLConnection uploadPhoto(FileInputStream fileInputStream)
-		{
-			final String serverFileName = "test"+ (int) Math.round(Math.random()*1000) + ".jpg";		
+
+		// upload photo to server
+		HttpURLConnection uploadPhoto(FileInputStream fileInputStream) {
+			final String serverFileName = "test"
+					+ (int) Math.round(Math.random() * 1000) + ".jpg";
 			final String lineEnd = "\r\n";
 			final String twoHyphens = "--";
-			final String boundary = "*****";	
-			try
-			{
+			final String boundary = "*****";
+			try {
 				URL url = new URL(SERVERURL);
 				// Open a HTTP connection to the URL
-				final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+				final HttpURLConnection conn = (HttpURLConnection) url
+						.openConnection();
 				// Allow Inputs
-				conn.setDoInput(true);				
+				conn.setDoInput(true);
 				// Allow Outputs
-				conn.setDoOutput(true);				
+				conn.setDoOutput(true);
 				// Don't use a cached copy.
 				conn.setUseCaches(false);
 				// Use a post method.
 				conn.setRequestMethod("POST");
 				conn.setRequestProperty("Connection", "Keep-Alive");
-				conn.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
-				
-				DataOutputStream dos = new DataOutputStream( conn.getOutputStream() );
-				
+				conn.setRequestProperty("Content-Type",
+						"multipart/form-data;boundary=" + boundary);
+
+				DataOutputStream dos = new DataOutputStream(
+						conn.getOutputStream());
+
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
-				dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + serverFileName +"\"" + lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\""
+						+ serverFileName + "\"" + lineEnd);
 				dos.writeBytes(lineEnd);
 				// create a buffer of maximum size
 				int bytesAvailable = fileInputStream.available();
@@ -305,8 +283,7 @@ public class MainActivity extends Activity {
 				byte[] buffer = new byte[bufferSize];
 				// read file and write it into form...
 				int bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-				while (bytesRead > 0)
-				{
+				while (bytesRead > 0) {
 					dos.write(buffer, 0, bufferSize);
 					bytesAvailable = fileInputStream.available();
 					bufferSize = Math.min(bytesAvailable, maxBufferSize);
@@ -320,19 +297,17 @@ public class MainActivity extends Activity {
 				fileInputStream.close();
 				dos.flush();
 				return conn;
-			}
-			catch (MalformedURLException ex){
+			} catch (MalformedURLException ex) {
 				Log.e(TAG, "error: " + ex.getMessage(), ex);
 				return null;
-			}
-			catch (IOException ioe){
+			} catch (IOException ioe) {
 				Log.e(TAG, "error: " + ioe.getMessage(), ioe);
 				return null;
 			}
 		}
-		
-	    //get image result from server and display it in result view
-		void getResultImage(HttpURLConnection conn){		
+
+		// get image result from server and display it in result view
+		void getResultImage(HttpURLConnection conn) {
 			// retrieve the response from server
 			InputStream is;
 			try {
@@ -342,110 +317,77 @@ public class MainActivity extends Activity {
 				FileOutputStream fos = new FileOutputStream(result_jpg_fn);
 				resultimage.compress(Bitmap.CompressFormat.JPEG, 90, fos);
 				fos.close();
-				Intent intent = new Intent(MainActivity.this, DisplayResults.class);
+				Intent intent = new Intent(MainActivity.this,
+						DisplayResults.class);
 				intent.putExtra(EXTRA_INTENT_MESSAGE, result_jpg_fn);
 				is.close();
-				
+
 				startActivity(intent);
 			} catch (IOException e) {
-				Log.e(TAG,e.toString());
+				Log.e(TAG, e.toString());
 				e.printStackTrace();
 			}
 		}
-		//Main code for processing image algorithm on the server
-		void processImage(String inputImageFilePath){			
+
+		// Main code for processing image algorithm on the server
+		void processImage(String inputImageFilePath) {
 			publishProgress(UPLOADING_PHOTO_STATE);
 			Log.v("InputImage", inputImageFilePath);
 			File inputFile = new File(inputImageFilePath);
 			try {
-				FileInputStream fileInputStream  = new FileInputStream(inputFile);
-		    	final HttpURLConnection  conn = uploadPhoto(fileInputStream);
-		    	if (conn != null){
-		    		getResultImage(conn);
-		    	}
+				FileInputStream fileInputStream = new FileInputStream(inputFile);
+				final HttpURLConnection conn = uploadPhoto(fileInputStream);
+				if (conn != null) {
+					getResultImage(conn);
+				}
 				fileInputStream.close();
+			} catch (FileNotFoundException ex) {
+				Log.e(TAG, ex.toString());
+			} catch (IOException ex) {
+				Log.e(TAG, ex.toString());
 			}
-	        catch (FileNotFoundException ex){
-	        	Log.e(TAG, ex.toString());
-	        }
-	        catch (IOException ex){
-	        	Log.e(TAG, ex.toString());
-	        }
 		}
-		
-	    public ServerTask() {
-	        dialog = new ProgressDialog(mContext);
-	    }		
-		
-	    protected void onPreExecute() {
-	        this.dialog.setMessage("Photo captured");
-	        this.dialog.show();
-	    }
+
+		public ServerTask() {
+			dialog = new ProgressDialog(mContext);
+		}
+
+		protected void onPreExecute() {
+			this.dialog.setMessage("Photo captured");
+			this.dialog.show();
+		}
+
 		@Override
-		protected Void doInBackground(String... params) {			//background operation 
+		protected Void doInBackground(String... params) { // background
+															// operation
 			String uploadFilePath = params[0];
 			fn = uploadFilePath;
 			processImage(uploadFilePath);
-			//release camera when previous image is processed
-			mCameraReadyFlag = true; 
+			// release camera when previous image is processed
+			mCameraReadyFlag = true;
 			return null;
-		}		
-		//progress update, display dialogs
+		}
+
+		// progress update, display dialogs
 		@Override
-	     protected void onProgressUpdate(Integer... progress) {
-	    	 if(progress[0] == UPLOADING_PHOTO_STATE){
-	    		 dialog.setMessage("Uploading");
-	    		 dialog.show();
-	    	 }
-	    	 else if (progress[0] == SERVER_PROC_STATE){
-		           if (dialog.isShowing()) {
-		               dialog.dismiss();
-		         }	    	 
-	    		 dialog.setMessage("Processing");
-	    		 dialog.show();
-	    	 }	         
-	     }		
-	     @Override
-	     protected void onPostExecute(Void param) {
-	           if (dialog.isShowing()) {
-	               dialog.dismiss();
-	           }
-	     }
-	}	
-	
-	private class ScaleListener extends
-	ScaleGestureDetector.SimpleOnScaleGestureListener {
+		protected void onProgressUpdate(Integer... progress) {
+			if (progress[0] == UPLOADING_PHOTO_STATE) {
+				dialog.setMessage("Uploading");
+				dialog.show();
+			} else if (progress[0] == SERVER_PROC_STATE) {
+				if (dialog.isShowing()) {
+					dialog.dismiss();
+				}
+				dialog.setMessage("Processing");
+				dialog.show();
+			}
+		}
 
-@Override
-public boolean onScale(ScaleGestureDetector detector) {
-	Log.i(TAG, "onScale " + 1);
-	
-
-	return true;
-
-}
-
-
-
-
- @Override
- public boolean onScaleBegin(ScaleGestureDetector detector) {
-  // TODO Auto-generated method stub
-	 Log.i(TAG, "onScaleBegin " + 2);
-  return true;
- }
-
- @Override
- public void onScaleEnd(ScaleGestureDetector detector) {
-  // TODO Auto-generated method stub
-	 Log.i(TAG, "onScaleEnd " + 3);
-	
- }
-
- 
- 
- 
-
-}
-
+		@Override
+		protected void onPostExecute(Void param) {
+			if (dialog.isShowing()) {
+				dialog.dismiss();
+			}
+		}
+	}
 }

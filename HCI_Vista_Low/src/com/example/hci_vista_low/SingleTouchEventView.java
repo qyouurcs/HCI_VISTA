@@ -51,8 +51,8 @@ public class SingleTouchEventView extends ImageView implements
 	private ScaleGestureDetector scaleDetector;
 
 	public SingleTouchEventView(Context context, AttributeSet attrs) {
-
 		super(context, attrs);
+		setEnabled(false);
 		paint.setAntiAlias(true);
 		paint.setStrokeWidth(6f);
 		paint.setColor(Color.BLACK);
