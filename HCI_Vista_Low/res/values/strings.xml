@@ -18,6 +18,13 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="action_speech">Speech Recognition</string>
     <string name="action_search">Search</string>
-	<string name="submit_btn">Submit</string>
-	<string name="cancel_btn">Cancel</string>
+    <string name="submit_btn">Submit</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="confirm_btn">Confirm</string>
+    <string name="people_detector">http://ec2-54-200-138-198.us-west-2.compute.amazonaws.com/vista/detector/people_detect.php</string>
+    <string name="bag_detector">http://ec2-54-200-138-198.us-west-2.compute.amazonaws.com/vista/detector/bag_detect.php</string>
+    <string name="back">Back</string>
+    <string name="title_activity_list_view">ListViewActivity</string>
+    <string name="title_activity_picture">PictureActivity</string>
+
 </resources>

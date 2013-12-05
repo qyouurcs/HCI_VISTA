@@ -15,10 +15,8 @@ public class Load_Images {
 	 * This function return the default picture gallery folder in the system.
 	 * @return String of the folder.
 	 */
-	public static String getExternalPublicPictureDir()
-	{
-		File path = Environment.getExternalStoragePublicDirectory(
-	            Environment.DIRECTORY_DCIM + "/Camera");
+	public static String getExternalPublicPictureDir(){
+		File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM + "/Camera");
 		Log.e("ImageGallery",path.getAbsolutePath());
 		return path.getAbsolutePath();
 	}

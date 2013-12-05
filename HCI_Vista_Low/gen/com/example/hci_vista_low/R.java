@@ -61,47 +61,68 @@ containing a value of this type.
     }
     public static final class drawable {
         public static final int button_shape=0x7f020000;
-        public static final int ic_action_camera=0x7f020001;
-        public static final int ic_action_search=0x7f020002;
-        public static final int ic_action_speech=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int ic_launcher_voice=0x7f020005;
-        public static final int image_selector=0x7f020006;
-        public static final int search=0x7f020007;
-        public static final int takepicture=0x7f020008;
+        public static final int document=0x7f020001;
+        public static final int folder=0x7f020002;
+        public static final int ic_action_camera=0x7f020003;
+        public static final int ic_action_search=0x7f020004;
+        public static final int ic_action_speech=0x7f020005;
+        public static final int ic_launcher=0x7f020006;
+        public static final int image_selector=0x7f020007;
+        public static final int search=0x7f020008;
+        public static final int takepicture=0x7f020009;
     }
     public static final class id {
-        public static final int action_compose=0x7f040013;
-        public static final int action_search=0x7f040012;
-        public static final int action_settings=0x7f040014;
+        public static final int action_compose=0x7f040020;
+        public static final int action_search=0x7f04001f;
+        public static final int action_settings=0x7f040021;
         public static final int any=0x7f040000;
         public static final int back=0x7f040001;
+        public static final int backButton=0x7f04001b;
         public static final int bottomBar=0x7f040006;
         public static final int browse_gallery=0x7f04000f;
         public static final int btn_cancel=0x7f040008;
+        public static final int btn_confirm=0x7f04001e;
         public static final int btn_submit=0x7f040007;
+        public static final int fileDateTextView=0x7f040017;
+        public static final int fileLengthTextView=0x7f040018;
+        public static final int fileListView=0x7f04001a;
+        public static final int fileNameTextView=0x7f040015;
+        public static final int filePathTextView=0x7f04001c;
         public static final int front=0x7f040002;
         public static final int fullscreen_content_controls=0x7f04000a;
+        public static final int iconImageView=0x7f040013;
         public static final int image=0x7f040011;
         public static final int image_gallery=0x7f04000b;
         public static final int item_dec_progress=0x7f040005;
         public static final int json_result=0x7f040009;
+        public static final int linearLayout1=0x7f040012;
+        public static final int linearLayout2=0x7f040014;
         public static final int pic_url=0x7f04000d;
+        public static final int pictureImageView=0x7f04001d;
+        public static final int relativeLayout1=0x7f040016;
         public static final int result_pic=0x7f040003;
         public static final int searchBtn=0x7f040010;
         public static final int single_touch=0x7f040004;
         public static final int takePicture=0x7f04000c;
+        public static final int textView3=0x7f040019;
         public static final int url_hint=0x7f04000e;
     }
     public static final class layout {
         public static final int activity_display_results=0x7f030000;
         public static final int activity_image_gallery=0x7f030001;
-        public static final int activity_main=0x7f030002;
-        public static final int image_view=0x7f030003;
+        public static final int activity_list_view=0x7f030002;
+        public static final int activity_main=0x7f030003;
+        public static final int activity_picture=0x7f030004;
+        public static final int image_view=0x7f030005;
+        public static final int listview=0x7f030006;
+        public static final int main=0x7f030007;
+        public static final int picture=0x7f030008;
     }
     public static final class menu {
         public static final int display_results=0x7f090000;
-        public static final int main=0x7f090001;
+        public static final int list_view=0x7f090001;
+        public static final int main=0x7f090002;
+        public static final int picture=0x7f090003;
     }
     public static final class string {
         public static final int action_search=0x7f070010;
@@ -109,19 +130,25 @@ containing a value of this type.
         public static final int action_speech=0x7f07000f;
         public static final int album_name=0x7f070008;
         public static final int app_name=0x7f070000;
+        public static final int back=0x7f070016;
+        public static final int bag_detector=0x7f070015;
         public static final int btnIntend=0x7f070004;
         public static final int btnIntendS=0x7f070005;
         public static final int btnIntendV=0x7f070006;
         public static final int cancel_btn=0x7f070012;
         public static final int cannot=0x7f070007;
+        public static final int confirm_btn=0x7f070013;
         public static final int dummy_button=0x7f07000d;
         public static final int dummy_content=0x7f07000e;
         public static final int hello=0x7f070003;
         public static final int hello_world=0x7f070002;
+        public static final int people_detector=0x7f070014;
         public static final int server_url=0x7f070009;
         public static final int submit_btn=0x7f070011;
         public static final int title_activity_display_results=0x7f07000a;
         public static final int title_activity_image_gallery=0x7f07000c;
+        public static final int title_activity_list_view=0x7f070017;
+        public static final int title_activity_picture=0x7f070018;
         public static final int url_hint=0x7f07000b;
     }
     public static final class style {

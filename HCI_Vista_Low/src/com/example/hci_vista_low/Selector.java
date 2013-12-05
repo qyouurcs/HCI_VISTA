@@ -13,6 +13,15 @@ public class Selector {
 	private Point bottom;
 	private int color = 0;
 	
+	public Selector(Selector a){
+		top = new Point();
+		bottom = new Point();
+		top.x = a.top.x;
+		top.y = a.top.y;
+		bottom.x = a.bottom.x;
+		bottom.y = a.bottom.y;
+		color = a.color;
+	}
 	// constructors
 	public Selector(){
 		top = new Point();

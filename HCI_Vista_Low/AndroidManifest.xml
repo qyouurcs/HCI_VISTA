@@ -19,8 +19,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:configChanges="orientation|screenSize|screenLayout"
             android:name="com.example.hci_vista_low.MainActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,11 +29,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:configChanges="orientation|screenSize|screenLayout"
-            android:adjustViewBounds="true"
             android:name="com.example.hci_vista_low.DisplayResults"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_display_results"
-            android:parentActivityName="com.example.hci_vista_low.MainActivity" >
+            android:parentActivityName="com.example.hci_vista_low.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.hci_vista_low.MainActivity" />
@@ -43,11 +43,18 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_image_gallery"
             android:parentActivityName="com.example.hci_vista_low.MainActivity"
-            android:theme="@style/FullscreenTheme" 
-            >
+            android:theme="@style/FullscreenTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.hci_vista_low.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.hci_vista_low.ListViewActivity"
+            android:label="@string/title_activity_list_view" >
+        </activity>
+        <activity
+            android:name="com.example.hci_vista_low.PictureActivity"
+            android:label="@string/title_activity_picture" >
         </activity>
     </application>
 

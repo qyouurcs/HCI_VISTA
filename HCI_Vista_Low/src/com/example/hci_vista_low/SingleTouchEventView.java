@@ -30,7 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.hci_vista_low.ListOfSelectors;
-
+import com.example.hci_vista_low.Selector;
 public class SingleTouchEventView extends ImageView implements
 		OnDoubleTapListener, OnGestureListener,
 		android.view.GestureDetector.OnGestureListener {
@@ -49,7 +49,7 @@ public class SingleTouchEventView extends ImageView implements
 	Selector selected;
 	private float scaleFactor = 1.f;
 	private ScaleGestureDetector scaleDetector;
-
+	
 	public SingleTouchEventView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setEnabled(false);
@@ -64,7 +64,10 @@ public class SingleTouchEventView extends ImageView implements
 		selected = new Selector();
 		scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
 	}
-
+	public void addSelector(Selector sel){
+		this.sels.addSelector(new Selector(sel));
+	}
+	
 	/**
 	 * Get all the selected areas.
 	 * 
