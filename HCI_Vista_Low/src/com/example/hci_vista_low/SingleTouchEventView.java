@@ -40,6 +40,7 @@ public class SingleTouchEventView extends ImageView implements
 	private static final String TAG = "LAM";
 	Bitmap image = null;
 	private GestureDetector detector;
+	private static final int SWIPE_VELOCITY = 5000;
 	RectF r;
 	private Random rnd = new Random();
 	boolean scroll;
@@ -241,6 +242,23 @@ public class SingleTouchEventView extends ImageView implements
 			float velocityY) {
 		// TODO Auto-generated method stub
 		Log.i(TAG, "onFling " + e1.getX() + " " + e1.getY());
+
+		if(e1==null || e2==null){
+			return false;
+		} 
+		
+		float dX = e2.getX() - e1.getX();
+		float dY = e1.getY() - e2.getY();
+		double dis= Math.pow(velocityY,2) +  Math.pow(velocityX,2);
+		dis = Math.sqrt(dis);
+		
+		if(SWIPE_VELOCITY <= dis) {
+		
+		sels.remove(selected);
+		invalidate();
+		editMode=false;
+		
+		}
 		return false;
 	}
 

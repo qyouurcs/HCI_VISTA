@@ -13,6 +13,8 @@ public class Selector {
 	private Point bottom;
 	private int color = 0;
 	
+	private boolean visible;
+	
 	// constructors
 	public Selector(){
 		top = new Point();
@@ -77,5 +79,14 @@ public class Selector {
 	}
 	public int getColor(){
 		return color;
+	}
+	
+	public boolean getVisible() {
+		return visible;
+	}
+	
+	public void setVisible(boolean b) {
+		visible = b;
+	
 	}
 }

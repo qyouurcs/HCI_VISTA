@@ -122,4 +122,8 @@ public class ListOfSelectors {
 	    	canvas.drawPoint(tempP.x, tempP.y, paint);
 	    }
 	}
+	public void remove(Selector s) {
+		selectors.remove(s);
+		s.setVisible(false);
+	}
 }
