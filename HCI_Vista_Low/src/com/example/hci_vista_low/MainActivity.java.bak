@@ -115,24 +115,14 @@ public class MainActivity extends Activity {
 		startActivityForResult(takePictureIntent, actionCode);
 	}
 
-private void handleBigCameraPhoto(Intent data) {
-	
+	private void handleBigCameraPhoto(Intent data) {
+
 		if (mCurrentPhotoPath != null) {
 			Log.v("MainActivity", "CurrentPhotoPath " + mCurrentPhotoPath);
 			/* Decode the JPEG file into a Bitmap */
-			File file = new File(mCurrentPhotoPath);
-			Uri output = Uri.fromFile(file);
-			//Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-			//cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, output);
-			Intent intent = new Intent(Intent.ACTION_MEDIA_MOUNTED, output);
-			sendBroadcast(intent);
-			Log.v("MainActivity", "Saved Image to " + mCurrentPhotoPath);
-			
-			// ask quanzeng about camera code.
-			Intent intent1 = new Intent(MainActivity.this, DisplayResults.class);
-			intent1.putExtra(EXTRA_INTENT_MESSAGE, mCurrentPhotoPath);
-			startActivity(intent1);
-			
+			Intent intent = new Intent(MainActivity.this, DisplayResults.class);
+			intent.putExtra(EXTRA_INTENT_MESSAGE, mCurrentPhotoPath);
+			startActivity(intent);
 		}
 	}
 

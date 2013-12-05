@@ -37,55 +37,6 @@ public class Selector {
 		this.color = color;
 	}
 	
-public void changeBound(int x, int y) {
-		if (Math.abs(x - top.x) > Math.abs(x - bottom.x))
-			bottom.x = x;
-		else
-			top.x = x;
-
-		if (Math.abs(y - top.y) > Math.abs(y - bottom.y))
-			bottom.y = y;
-		else
-			top.y = y;
-	}
-	
-	public void moveBoundary(int x, int y){
-		int corner = getCorner(x, y);
-		if(corner == Selector.TOP_LEFT){
-			top.x = x; top.y = y;
-		}else if(corner == Selector.BOTTOM_RIGHT){
-			bottom.x = x; bottom.y = y;
-		}
-		else if(corner == Selector.TOP_RIGHT){
-			bottom.x = x;
-			top.y = y;
-		}else{
-			bottom.y = y;
-			top.x = x;
-		}
-	}
-	
-	public int getCorner(int x, int y) {
-		// TOPLEFT 3, BottomLeft 2, TOPRIGHT 1, BOTTOMRIGHT 0
-		//1^i top (true) 2^1 left (true)
-		boolean leftFlag = false;
-		if (Math.abs(x - top.x) < Math.abs(x - bottom.x)) //left and right check
-			leftFlag = true;//value += 2; // left
-		// 0 right
-		if (Math.abs(y - top.y) < Math.abs(y - bottom.y)){ //top and bottom check
-			if(leftFlag == true)
-				return Selector.TOP_LEFT;
-			else
-				return Selector.TOP_RIGHT;
-			//value ++; //top 1
-		}
-		else{
-			if(leftFlag == true)
-				return Selector.BOTTOM_LEFT;
-			else
-				return Selector.BOTTOM_RIGHT;
-		}
-	}
 	// determine if a point is in bound.
 	public boolean inBound(int x, int y){
 		if( x >= top.x && x <= bottom.x && y >= top.y && y <= bottom.y )

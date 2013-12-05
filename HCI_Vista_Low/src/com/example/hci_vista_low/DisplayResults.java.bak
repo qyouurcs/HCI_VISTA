@@ -282,32 +282,14 @@ public class DisplayResults extends Activity {
 
 	public void display() {
 		Intent intent = getIntent();
-		String result_fn = intent.getStringExtra(MainActivity.EXTRA_INTENT_MESSAGE);
-		Log.i("LAM", "filename " + result_fn);
-		Bitmap image = BitmapFactory.decodeFile(result_fn);
-		try {
-			File path = Environment
-					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-			if (!path.exists()) {
-			    if (!path.mkdirs()) {
-			        Log.e("LAM", "failed to create directory");
-			        
-			    }else
-			    	Log.e("LAM", "okY to create directory");
-			}else
-		    	Log.e("LAM", "okY to create directory");
-			
-			String filename = "barry.png";
-			File file = new File(path, filename);
-			filename = file.toString();
-			Utils.bitmapToMat(image, mat);
-			if( Highgui.imwrite(filename, mat) == true)
-				Log.i("LAM", "write to file");
-			else
-				Log.i("LAM", "write to file failed");
-		} catch (Exception e) {
-			Log.e("MyLog", e.toString());
-		}
+		String result_fn = intent
+				.getStringExtra(MainActivity.EXTRA_INTENT_MESSAGE);
+		// Bitmap image = BitmapFactory.decodeFile(result_fn);
+		// result = (ImageView) findViewById(R.id.result_pic);
+		// result.setImageBitmap(image);
+		// result = new SingleTouchEventView(this, null, result_fn);
+		// setContentView(R.layout.activity_display_results);
+		// setContentView(new SingleTouchEventView(this, null, result_fn));
 		singleTouch.setImageFile(result_fn);
 		// addContentView(new SingleTouchEventView(this, null, result_fn));
 	}
@@ -367,7 +349,6 @@ public class DisplayResults extends Activity {
 				publishProgress(SERVER_PROC_STATE);
 				// close streams
 				dos.flush();
-				dos.close();
 				return conn;
 			} catch (MalformedURLException ex) {
 				Log.e(TAG, "error: " + ex.getMessage(), ex);

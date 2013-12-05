@@ -208,11 +208,7 @@ public class SingleTouchEventView extends ImageView implements
 	@Override
 	public boolean onSingleTapConfirmed(MotionEvent e) {
 		Log.i(TAG, "onSingleTapConfirmed " + e.getX() + " " + e.getY());
-		if (selected == null)
-			sels.addPoint(new Point((int) e.getX(), (int) e.getY()));
-		else
-			selected.changeBound((int) e.getX(), (int) e.getY());
-
+		sels.addPoint(new Point((int) e.getX(), (int) e.getY()));
 		invalidate();
 		return true;
 	}
