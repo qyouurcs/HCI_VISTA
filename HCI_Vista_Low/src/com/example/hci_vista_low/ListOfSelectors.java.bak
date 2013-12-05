@@ -32,27 +32,31 @@ public class ListOfSelectors {
 	private Random rnd = new Random(); 
 	private int color;
 
-	public void setIsAddable(boolean v){
+	public void setIsAddable(boolean v) {
 		isAddable = v;
 	}
-	public void flipAddable(){
-			isAddable = !isAddable;
+
+	public void flipAddable() {
+		isAddable = !isAddable;
 	}
-	public ListOfSelectors(){
+
+	public void removeElement(Selector s) {
+		selectors.remove(s);
+	}
+
+	public ListOfSelectors() {
 		selectors = new ArrayList<Selector>();
 		twoPoints = false;
 	}
-	public List<Selector> getSelectors()
-	{
+
+	public List<Selector> getSelectors(){
 		return selectors;
 	}
-	public void clear()
-	{
+	public void clear(){
 		selectors.clear();
 	}
 	
-	public int size()
-	{
+	public int size(){
 		return selectors.size();
 	}
 
