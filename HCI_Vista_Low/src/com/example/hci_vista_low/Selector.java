@@ -35,12 +35,6 @@ public class Selector {
 		bottom = new Point();
 	}
 	
-	public Selector(Selector s){
-		this.top = s.top;
-		this.bottom = s.bottom;
-		this.color = s.color;
-	}
-	
 	public Selector(int x1, int y1, int x2, int y2, int color){
 		top = new Point(x1, y1);
 		bottom = new Point(x2, y2);
