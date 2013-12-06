@@ -13,9 +13,9 @@ Have you ever met this kind of situations, that you see something you want to pu
 
 Well, VFind comes to the rescue!
 
-VFind is an Android App that you use for shopping. The main features of VFind is two-folds: 1). Image Based Search Engine and 2). Automatically Object Detection and Voice Control. Don't know the name of the brand or the item? No problem, take a picture! 
+VFind is an Android App that you use for shopping. The main features of VFind is two-folds: 1). Image Based Search Engine and 2). Automatically Object Detection and Voice Control. 
 
-Don't want to type characters? No problem, just say what you want! VFind will do everything for you.
+Don't know the name of the brand or the item? No problem, take a picture! Don't want to type characters? No problem, just say what you want! VFind will do everything for you.
 
 Features:
 ==================================
