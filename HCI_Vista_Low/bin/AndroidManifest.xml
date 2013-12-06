@@ -56,6 +56,10 @@
             android:name="com.example.hci_vista_low.PictureActivity"
             android:label="@string/title_activity_picture" >
         </activity>
+        <activity
+            android:name="com.example.hci_vista_low.ListViewLoader"
+            android:label="@string/title_activity_list_view_loader" >
+        </activity>
     </application>
 
 </manifest>

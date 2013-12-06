@@ -3,14 +3,12 @@ package com.example.hci_vista_low;
 import java.io.ByteArrayOutputStream;
 import android.graphics.Color;
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +20,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -32,11 +31,14 @@ import android.gesture.GestureOverlayView;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.speech.RecognizerIntent;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -50,7 +52,6 @@ import android.widget.Toast;
 
 public class DisplayResults extends Activity {
 	private static final int VOICE_RECOGNITION_REQUEST_CODE = 9999;
-	private Bitmap resultimage;
 	Mat mat; // OpenCV matrix for image
 	Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
 	ImageView result;
@@ -67,6 +68,9 @@ public class DisplayResults extends Activity {
 	private String bag_detect_url = "";
 	private TextView json_view = null;
 	private String result_fn = "";
+	private int screenWidth;
+	private int screenHeight;
+	
 	private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
 		@Override
 		public void onManagerConnected(int status) {
@@ -84,7 +88,6 @@ public class DisplayResults extends Activity {
 			}
 		}
 	};
-
 	
 	private void private_init()
 	{
@@ -95,6 +98,7 @@ public class DisplayResults extends Activity {
 			action_layout = (LinearLayout) findViewById(R.id.bottomBar);
 			singleTouch.setActionLayout(action_layout);
 		}
+		
 		btn_cancel = (Button) findViewById(R.id.btn_cancel);
 		btn_cancel.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
@@ -232,6 +236,10 @@ public class DisplayResults extends Activity {
 				RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
 		startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
 	}
+	
+	
+	
+	@SuppressLint("NewApi")
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == VOICE_RECOGNITION_REQUEST_CODE)
@@ -264,15 +272,19 @@ public class DisplayResults extends Activity {
 						{
 							// now, we need to send this picture to the server
 							// to detect people.
-							Bitmap upload_image = BitmapFactory
-									.decodeFile(this.result_fn);
+							Bitmap upload_image = this.singleTouch.getImage();
+							//BitmapFactory.decodeFile(this.result_fn);
 							// Bitmap small_version =
 							// Bitmap.createBitmap(upload_image,upload_image.getWidth()/4,
 							// upload_image.getHeight()/4,false);
 							
+							Display display = getWindowManager().getDefaultDisplay();
+							Point screenSize = new Point();
+							display.getSize(screenSize);
+							Log.i("LAM", "xx" + screenSize.x + "yy"+screenSize.y);
+							
 							Bitmap small_version = Bitmap.createScaledBitmap(
-									upload_image, singleTouch.getWidth()/4,
-									singleTouch.getHeight()/4, false);
+									upload_image, screenSize.x, screenSize.y,  false);
 							ServerTask task = new ServerTask(server_url, "Process your command: " + msg,main_pd, PostProcess.SPEECH);
 							String bounding_box = "";
 							Log.e("bounding box", bounding_box);
@@ -353,35 +365,11 @@ public class DisplayResults extends Activity {
 	public void display() {
 		Intent intent = getIntent();
 		result_fn = intent.getStringExtra(MainActivity.EXTRA_INTENT_MESSAGE);
-		Log.e("DEBUG", result_fn);
-
-		//String result_fn = intent.getStringExtra(MainActivity.EXTRA_INTENT_MESSAGE);
-		Log.i("LAM", "filename " + result_fn);
-		Bitmap image = BitmapFactory.decodeFile(result_fn);
-		try {
-			File path = Environment
-					.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-			if (!path.exists()) {
-			    if (!path.mkdirs()) {
-			        Log.e("LAM", "failed to create directory");
-			        
-			    }else
-			    	Log.e("LAM", "okY to create directory");
-			}else
-		    	Log.e("LAM", "okY to create directory");
-			
-			String filename = "barry.png";
-			File file = new File(path, filename);
-			filename = file.toString();
-			Utils.bitmapToMat(image, mat);
-			if( Highgui.imwrite(filename, mat) == true)
-				Log.i("LAM", "write to file");
-			else
-				Log.i("LAM", "write to file failed");
-		} catch (Exception e) {
-			Log.e("MyLog", e.toString());
-		}
-		singleTouch.setImageFile(result_fn);
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		int height = displaymetrics.heightPixels;
+		int width = displaymetrics.widthPixels;
+		singleTouch.setImageFile(result_fn, height, width);
 	}
 
 	public class ServerTask extends AsyncTask<Bitmap, Integer, String> {

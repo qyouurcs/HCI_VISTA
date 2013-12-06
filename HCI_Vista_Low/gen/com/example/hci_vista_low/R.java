@@ -67,9 +67,10 @@ containing a value of this type.
         public static final int ic_action_search=0x7f020004;
         public static final int ic_action_speech=0x7f020005;
         public static final int ic_launcher=0x7f020006;
-        public static final int image_selector=0x7f020007;
-        public static final int search=0x7f020008;
-        public static final int takepicture=0x7f020009;
+        public static final int ic_launcher_voice=0x7f020007;
+        public static final int image_selector=0x7f020008;
+        public static final int search=0x7f020009;
+        public static final int takepicture=0x7f02000a;
     }
     public static final class id {
         public static final int action_compose=0x7f040020;
@@ -111,18 +112,20 @@ containing a value of this type.
         public static final int activity_display_results=0x7f030000;
         public static final int activity_image_gallery=0x7f030001;
         public static final int activity_list_view=0x7f030002;
-        public static final int activity_main=0x7f030003;
-        public static final int activity_picture=0x7f030004;
-        public static final int image_view=0x7f030005;
-        public static final int listview=0x7f030006;
-        public static final int main=0x7f030007;
-        public static final int picture=0x7f030008;
+        public static final int activity_list_view_loader=0x7f030003;
+        public static final int activity_main=0x7f030004;
+        public static final int activity_picture=0x7f030005;
+        public static final int image_view=0x7f030006;
+        public static final int listview=0x7f030007;
+        public static final int main=0x7f030008;
+        public static final int picture=0x7f030009;
     }
     public static final class menu {
         public static final int display_results=0x7f090000;
         public static final int list_view=0x7f090001;
-        public static final int main=0x7f090002;
-        public static final int picture=0x7f090003;
+        public static final int list_view_loader=0x7f090002;
+        public static final int main=0x7f090003;
+        public static final int picture=0x7f090004;
     }
     public static final class string {
         public static final int action_search=0x7f070010;
@@ -148,6 +151,7 @@ containing a value of this type.
         public static final int title_activity_display_results=0x7f07000a;
         public static final int title_activity_image_gallery=0x7f07000c;
         public static final int title_activity_list_view=0x7f070017;
+        public static final int title_activity_list_view_loader=0x7f070019;
         public static final int title_activity_picture=0x7f070018;
         public static final int url_hint=0x7f07000b;
     }
