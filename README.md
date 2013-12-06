@@ -19,11 +19,12 @@ Don't want to type characters? No problem, just say what you want! VFind will do
 
 Features:
 ==================================
-1. Front-end list for seminar information;
-2. Back-end mySQL database for storing seminars;
-3. Easy export to Google Calendar;
-4. Embedded Google Map, easy to navigate;
-5. Estimating seminar information including: room capacity,speaker prominance rating, estimated attendance and etc.
+1. Various input methods including taking pictures, selecting pictures from gallery, and pasting URLs;
+2. Easy gesture control for drawing, scaling, moving, deleting and selecting bounding box;
+3. Automatically segmentation using saliency detection and clustering, saving touble from moving fingers too often;
+4. Pre-built up object detectors integrating with voice control command, just say what you're looking for;
+5. Item retrivial based on edges, colors, and textures; 
+6. Results including a list of most similar items in our database are returned from our server.
 
 How Do I Use It? 
 ==================================
