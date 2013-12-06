@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HCI_Vista_Low</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="hello">Hello World, PhotoIntentActivity!</string>
+    <string name="btnIntend">Take (big) Picture</string>
+    <string name="btnIntendS">Take (small) Picture</string>
+    <string name="btnIntendV">Take Video</string>
+    <string name="cannot">Cannot</string>
+    <string name="album_name">HCI_Vista</string>
+    <string name="server_url">http://ec2-54-200-138-198.us-west-2.compute.amazonaws.com/vista/vista.php</string>
+    <string name="title_activity_display_results">DisplayResults</string>
+    <string name="url_hint">Paste the Image URL Here</string>
+    <string name="title_activity_image_gallery">ImageGallery</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="action_speech">Speech Recognition</string>
+    <string name="action_search">Search</string>
+    <string name="submit_btn">Submit</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="confirm_btn">Confirm</string>
+    <string name="people_detector">http://ec2-54-200-138-198.us-west-2.compute.amazonaws.com/vista/detector/people_detect.php</string>
+    <string name="bag_detector">http://ec2-54-200-138-198.us-west-2.compute.amazonaws.com/vista/detector/bag_detect.php</string>
+    <string name="back">Back</string>
+    <string name="title_activity_list_view">ListViewActivity</string>
+    <string name="title_activity_picture">PictureActivity</string>
+<<<<<<< HEAD
+    <string name="title_activity_image_retrieval">ImageRetrievalActivity</string>
+    <string name="title_activity_view_details">ViewDetails</string>
+=======
+    <string name="title_activity_list_view_loader">ListViewLoader</string>
+>>>>>>> bfb030ff90bac8289af72bafe16a3ea06db577c5
+
+</resources>

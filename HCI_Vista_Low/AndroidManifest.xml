@@ -50,6 +50,7 @@
         </activity>
         <activity
             android:name="com.example.hci_vista_low.ListViewActivity"
+            android:parentActivityName="com.example.hci_vista_low.MainActivity"
             android:label="@string/title_activity_list_view" >
         </activity>
         <activity
@@ -57,8 +58,13 @@
             android:label="@string/title_activity_picture" >
         </activity>
         <activity
-            android:name="com.example.hci_vista_low.ListViewLoader"
-            android:label="@string/title_activity_list_view_loader" >
+            android:name="com.example.hci_vista_low.ImageRetrievalActivity"
+            android:parentActivityName="com.example.hci_vista_low.ImageGallery"
+            android:label="@string/title_activity_image_retrieval" >
+        </activity>
+        <activity
+            android:name="com.example.hci_vista_low.ViewDetails"
+            android:label="@string/title_activity_view_details" >
         </activity>
     </application>
 

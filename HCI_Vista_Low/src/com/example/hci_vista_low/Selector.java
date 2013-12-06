@@ -35,6 +35,7 @@ public class Selector {
 		bottom = new Point();
 	}
 	
+	
 	public Selector(int x1, int y1, int x2, int y2, int color){
 		top = new Point(x1, y1);
 		bottom = new Point(x2, y2);

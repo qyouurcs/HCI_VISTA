@@ -26,6 +26,8 @@
     <string name="back">Back</string>
     <string name="title_activity_list_view">ListViewActivity</string>
     <string name="title_activity_picture">PictureActivity</string>
+    <string name="title_activity_image_retrieval">ImageRetrievalActivity</string>
+    <string name="title_activity_view_details">ViewDetails</string>
     <string name="title_activity_list_view_loader">ListViewLoader</string>
 
 </resources>

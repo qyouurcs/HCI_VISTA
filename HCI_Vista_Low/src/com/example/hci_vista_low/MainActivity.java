@@ -370,7 +370,6 @@ public class MainActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(String... params) { // background
-															// operation
 			String uploadFilePath = params[0];
 			fn = uploadFilePath;
 			processImage(uploadFilePath);

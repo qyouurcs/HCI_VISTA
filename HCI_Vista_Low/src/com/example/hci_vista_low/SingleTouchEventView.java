@@ -4,6 +4,11 @@ import java.util.Random;
 import java.util.Iterator;
 import java.util.List;
 
+import org.opencv.android.Utils;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
+
 import android.content.Context;
 import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGestureListener;
@@ -27,6 +32,8 @@ import android.widget.LinearLayout;
 
 import com.example.hci_vista_low.ListOfSelectors;
 import com.example.hci_vista_low.Selector;
+import com.example.saliency.*;
+
 
 public class SingleTouchEventView extends ImageView implements
 		OnDoubleTapListener, OnGestureListener,
@@ -35,6 +42,7 @@ public class SingleTouchEventView extends ImageView implements
 	private ListOfSelectors sels = new ListOfSelectors();
 	private LinearLayout action_layout = null;
 	private static final String TAG = "LAM";
+	private Mat s;
 	private Bitmap image = null;
 	private GestureDetector detector;
 	private static final int SWIPE_VELOCITY = 4000;
@@ -160,6 +168,16 @@ public class SingleTouchEventView extends ImageView implements
 			else
 				this.action_layout.setVisibility(View.INVISIBLE);
 		}
+	}
+	public void saliency(){
+		int width = this.getWidth();
+		int height = this.getHeight();
+		s = new Mat(image.getHeight(), image.getWidth(), CvType.CV_8U, new Scalar(4));
+		Utils.bitmapToMat(image, s);
+		Selector select = Evaluate.doEvaluate(s,width,height);
+		sels.addSelector(select);
+		Utils.matToBitmap(s, image);
+		this.setImageBitmap(image);
 	}
 
 	@Override

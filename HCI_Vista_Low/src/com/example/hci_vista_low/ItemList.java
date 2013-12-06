@@ -14,7 +14,6 @@ public class ItemList {
 	public ItemList() {
 		items = new ArrayList<Item>();
 	}
-
 	public boolean parser(String json_result) {
 		try {
 			JSONArray multiResults = new JSONArray(json_result);

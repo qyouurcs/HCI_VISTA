@@ -56,7 +56,7 @@ public class DisplayResults extends Activity {
 	Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
 	ImageView result;
 	private ProgressDialog main_pd;
-	
+	public final static String EXTRA_INTENT_MESSAGE_RESULT = "com.urcs.hci_vista.result";
 	private static final String TAG = "OCVSample::Activity";
 	private SingleTouchEventView singleTouch = null;
 	private LinearLayout action_layout = null;
@@ -88,12 +88,10 @@ public class DisplayResults extends Activity {
 			}
 		}
 	};
-	
 	private void private_init()
 	{
 		setContentView(R.layout.activity_display_results);
-		if(singleTouch == null) // Same with the progress bar.
-		{
+		if(singleTouch == null) {
 			singleTouch = (SingleTouchEventView) findViewById(R.id.single_touch);
 			action_layout = (LinearLayout) findViewById(R.id.bottomBar);
 			singleTouch.setActionLayout(action_layout);
@@ -123,46 +121,8 @@ public class DisplayResults extends Activity {
 					else
 						task = new ServerTask(SERVERURL, false, PostProcess.IMG_SEARCH);
 					task.setIdx(i + 1);
-					try {
-						json_result = task.execute(selected_areas[i]).get();
-						JSONArray multiResults = new JSONArray(json_result);
-						System.out.println(multiResults.length() + "\n");
-						for (int j = 0; j < multiResults.length(); j++) {
-							JSONObject jsonObject = multiResults
-									.getJSONObject(j);
-							String title = jsonObject.getString("title");
-							String desc = jsonObject.getString("details");
-							double price = jsonObject.getDouble("price");
-							String path = jsonObject.getString("url");
-							System.out.println("title:" + title);
-							System.out.println("desc: " + desc);
-							System.out.println("price: " + price);
-							System.out.println("path: " + path);
-							formated_results[i] += title + '\n';
-							/*
-							 * formated_results[i] += desc + '\n';
-							 * formated_results[i] += price + '\n';
-							 * formated_results[i] += path + '\n';
-							 */
-						}
-						formated_results[i] += "----------------------------\n";
-
-					} 
-					catch (JSONException e) {
-						// TODO Auto-generated catch block
-						formated_results[i] += json_result;
-						e.printStackTrace();
-					}
-					catch(Exception e){
-						e.printStackTrace();
-					}
+					task.execute(selected_areas[i]);
 				}
-				String display_titles = "";
-				for (int i = 0; i < formated_results.length; i++) {
-					display_titles += formated_results[i];
-				}
-				json_view.setText(display_titles);
-				json_view.setVisibility(View.VISIBLE);
 				singleTouch.clear();
 			}
 		});
@@ -170,8 +130,7 @@ public class DisplayResults extends Activity {
 		SERVERURL = getResources().getString(R.string.server_url);
 		people_detect_url = getResources().getString(R.string.people_detector);
 		bag_detect_url = getResources().getString(R.string.bag_detector);
-		main_pd = new ProgressDialog(this);
-	
+		main_pd = new ProgressDialog(this);	
 		//pd = ProgressDialog.show(DisplayResults.this, null,this.init_text);
 	}
 	@Override
@@ -223,7 +182,19 @@ public class DisplayResults extends Activity {
 	/**
 	 * Process the retrieval results from the server.
 	 */
-	public void postProcessUpload(){
+	public void postProcessUpload(String json_result){
+		try {
+			Intent intent = new Intent(DisplayResults.this, ImageRetrievalActivity.class);
+			intent.putExtra(EXTRA_INTENT_MESSAGE_RESULT, json_result);
+			startActivity(intent);
+			//Now we can start the activity, the activity will display all the
+			//results.
+		} 
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		//json_view.setText(display_titles);
+		//json_view.setVisibility(View.VISIBLE);
 		return;
 	}
 	public void speak() {
@@ -268,6 +239,8 @@ public class DisplayResults extends Activity {
 						else
 							if(msg.contains("bag") || msg.contains("bags"))
 								server_url = this.bag_detect_url;
+							else if(msg.contains("segmentation"))
+								singleTouch.saliency();
 						if(server_url != null)
 						{
 							// now, we need to send this picture to the server
@@ -294,10 +267,8 @@ public class DisplayResults extends Activity {
 							catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
-							}
-							
-						}
-						
+							}	
+						}			
 					}
 				}
 				// Result code for various error.
@@ -514,7 +485,7 @@ public class DisplayResults extends Activity {
 					// System.out.println("Json: " + json_txt_result);
 					is.close();
 					conn.disconnect();// No use anymore.
-					Log.e("DoInBackground", json_txt_result);
+					//Log.e("DoInBackground", json_txt_result);
 					return json_txt_result;
 				} catch (IOException e) {
 					Log.e(TAG, e.toString());
@@ -547,14 +518,15 @@ public class DisplayResults extends Activity {
 		protected void onPostExecute(String param) {
 			if(this.isShowPD && pd.isShowing())
 				pd.dismiss();
-			Log.e("PostExecute", pp_type + " " + param );
+			//Log.e("PostExecute", pp_type + " " + param );
 			switch(pp_type){
 				case SPEECH:
-					Log.e("PostExecute", param);
+					//Log.e("PostExecute", param);
 					postProcessSpeak(param);
 					break;
 				case IMG_SEARCH:
-					postProcessUpload();
+					//Log.e("PostExecute", param);
+					postProcessUpload(param);
 					break;
 				default:
 					break;
