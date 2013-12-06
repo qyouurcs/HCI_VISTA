@@ -1,14 +1,21 @@
 HCI_VISTA
 =========
 
-* Title: csc212-proj2-goodteam;
-* Website: http://ec2-54-205-135-226.compute-1.amazonaws.com/index.php;
-* Source Code: https://github.com/mitchellg/csc212-proj2-goodteam;
-* Recommanded Browser: Newest Version of Chrome.
+* Title: VFind
+* Website: https://sites.google.com/site/hcivista/
+* Source Codes: https://github.com/qyouurcs/HCI_VISTA
+* Recommanded Platforms: Newest Version of Android (4.2 and 4.4 recommended)
 
 What Is It?:
 ==================================
-This webpage's primary feature is to function as an aggregator for upcoming academic talks at the University of Rochester available for students and faculty. Each entry in the table documents a seminar's date, time, speaker, department, lecture topic, food provided, and location. Lectures that have already occured are automatically removed from the table. The site also permits users to add new lectures to the main table. Additionally, the site allows users to choose lectures, add them to their respective google calanders, view the location of the lecture on an integrated map, view the occupancy of the venue, the rating of the speaker, the subject popularity, and the estimated attendance. This information gives users enough details to decide exactly which lectures will be worth their time, given their individual desires. 
+
+Have you ever met this kind of situations, that you see something you want to purchase but have no idea what exact key words to put into a search engine or a retail website, or you just know the brand name and there are so many items you can find under that brand that you are not able to find the exact item you want? 
+
+Well, VFind comes to the rescue!
+
+VFind is an Android App that you use for shopping. The main features of VFind is two-folds: 1). Image Based Search Engine and 2). Automatically Object Detection and Voice Control. Don't know the name of the brand or the item? No problem, take a picture! 
+
+Don't want to type characters? No problem, just say what you want! VFind will do everything for you.
 
 Features:
 ==================================
@@ -48,14 +55,9 @@ Version Updates/Log:
 Contacts
 ==================================
 Authors:
-Mitchell Gordon, Lukas Slipski, Michael Shteyn, Jianbo Yuan
+Quanzeng You, Lam Tran, ianbo Yuan, Yukun Liu, and Jonathon Wong
 
-If you find a bug that requires attention, or have any other inquiries about the functionality of the site, please
-feel free to contact Mitchell Gordon <m.gordon@rochester.edu>.
-
-Wizard of oz features:
-==================================
-* The "Add to calendar" button and map displayed when clicking on a seminar are currently a hard-coded  and do not change to reflect the actual seminar clikced on.
-* Estimated attandence and related statsitcs are also currently hard-coded.
+For further information and inquiries about our app and source codes, please
+feel free to contact Quanzeng You at <qyou2@cs.rochester.com>, Lam Tran at <ltran@cs.rochester.edu> or Jianbo Yuan at <jyuan10@ece.rochester.edu>. Please check out our website for new features and feedbacks are mostly welcome and appreciated.
 
 Copyright (C) 2013.
