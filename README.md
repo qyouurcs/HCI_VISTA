@@ -28,10 +28,11 @@ Features:
 
 How Do I Use It? 
 ==================================
+When you open Vista, you will see three option buttons each indicating to paste a URL, take a picture and select one from your gallery. By choosing which you want as a method of an input, you can draw a bounding box on the selected picture. Then you can conduct scaling, moving, selecting and canceling activity just using your fingers.
 
+Additional feature is voice controlled object detector: you can click on the microphone icon in the right up corner and say the object you want to detect such as "people" and "bag", and our app will automatically detect objects according to what your command. You can also say "segmentation" for automatically image segmentation to get the most salient object. All of these commands will lead you to a bounding box which can be edited as stated before.
 
-
-
+After you have a bounding box, you can click submit to upload this area to our server for item retrieval, and we will return you a list of items we find in our database which are the most similar (same if we could) as well as their links, prices and all the other information you may need.
 
 Version Updates/Log:
 ==================================
@@ -39,7 +40,6 @@ Version Updates/Log:
 * 10-12: 
 * 10-13: 
 * 10-14: 
-
 
 Contacts
 ==================================
