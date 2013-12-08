@@ -9,7 +9,7 @@ HCI_VISTA
 What Is It?:
 ==================================
 
-Have you ever been in this kind of situations, that you see something you want to purchase but have no idea what exact key words to put into a search engine or a retail website, or you just know the brand name and there are so many items you can find under that brand that you are not able to find the exact item you want? 
+Have you ever been in this kind of situations, where you see something you want to purchase but have no idea what exact key words to put into a search engine or a retail website, or you just know the brand name and there are so many items you can find under that brand that you are not able to find the exact item you want? 
 
 Well, Vista comes to the rescue!
 
