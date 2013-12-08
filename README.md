@@ -9,11 +9,11 @@ HCI_VISTA
 What Is It?:
 ==================================
 
-Have you ever met this kind of situations, that you see something you want to purchase but have no idea what exact key words to put into a search engine or a retail website, or you just know the brand name and there are so many items you can find under that brand that you are not able to find the exact item you want? 
+Have you ever been in this kind of situations, that you see something you want to purchase but have no idea what exact key words to put into a search engine or a retail website, or you just know the brand name and there are so many items you can find under that brand that you are not able to find the exact item you want? 
 
 Well, Vista comes to the rescue!
 
-VFind is an Android App that you use for shopping. The main features of Vista is two-folds: 1). Image Based Search Engine and 2). Automatically Object Detection and Voice Control. 
+Vista is an Android App that you use for shopping. The main features of Vista is two-folds: 1). Image Based Search Engine and 2). Automatically Object Detection and Voice Control. 
 
 Don't know the name of the brand or the item? No problem, just take a picture, paste a URL! Don't want to type that many characters? No problem, just say what you want! Vista will do everything for you.
 
