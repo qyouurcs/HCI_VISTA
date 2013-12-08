@@ -44,7 +44,7 @@ Version Updates/Log:
 Contacts
 ==================================
 Authors:
-Quanzeng You, Lam Tran, ianbo Yuan, Yukun Liu, and Jonathon Wong
+Quanzeng You, Lam Tran, Jianbo Yuan, Yukun Liu, and Jonathon Wong
 
 For further information and inquiries about our app and source codes, please
 feel free to contact Quanzeng You at <qyou2@cs.rochester.com>, Lam Tran at <ltran@cs.rochester.edu> or Jianbo Yuan at <jyuan10@ece.rochester.edu>. Please check out our website for new features and feedbacks are mostly welcome and appreciated.
