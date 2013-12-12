@@ -21,7 +21,7 @@ Features:
 ==================================
 1. Various input methods including taking pictures, selecting pictures from gallery, and pasting URLs;
 2. Easy gesture control for drawing, scaling, moving, deleting and selecting bounding box;
-3. Automatically segmentation using saliency detection and clustering, saving touble from moving fingers too often;
+3. Auto segmentation using saliency detection and clustering, saving trouble from finger moving/clicking too often;
 4. Pre-built up object detectors integrating with voice control command, just say what you're looking for;
 5. Item retrieval based on edges, colors, and textures; 
 6. Results including a list of most similar items in our database are returned from our server.
