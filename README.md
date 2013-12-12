@@ -9,7 +9,7 @@ HCI_VISTA
 What Is It?:
 ==================================
 
-Have you ever been in this kind of situations, where you see something you want to purchase but have no idea what exact key words to put into a search engine, or you only know the brand name and there are so many items you can find under that brand that you are not able to find the exact item you want? 
+Have you ever been in this kind of situations, where you see items you want to purchase but have no clue what exact words you should use to put into a search engine, or you know imcomplete information such as the brand name, but there are so many items you can find under that brand that you are still not able to find your exact item? 
 
 Well, Vista comes to the rescue!
 
@@ -36,10 +36,16 @@ After you have a bounding box, you can click submit to upload this area to our s
 
 Version Updates/Log:
 ==================================
-* 10-11: 
-* 10-12: 
-* 10-13: 
-* 10-14: 
+* 11-01: Paper Prototype, Database Design
+* 11-10: Database set up (images from UR bookstore under all categories) 
+* 11-12: First design of UI, server setup using Amazon EC2 
+* 11-14: Connecting to server, slow performance
+* 11-16: Finger selected bounding box feature
+* 11-20: Low-fidelity prototype
+* 11-26: Human detector and handbag detector added
+* 11-28: Saliency detection and kmeans implemented for auto image segmentation
+* 11-30: Voice control Feature added
+* 12-02: UI optimization, evaluation process
 
 Contacts
 ==================================
